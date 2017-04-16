@@ -36,6 +36,6 @@ User.remove({})
     	console.log(err);
     })
     .then(function(user){
-    	console.log(user);
+    	console.log('Database seeded!');
     	process.exit();
     });
