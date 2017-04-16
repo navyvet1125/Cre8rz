@@ -57,6 +57,44 @@ userSchema.statics.searchNameAndType = function(name, type, cb){
 	});
 };
 
+userSchema.statics.findWithId = function(id, cb){
+	var currentPledges;
+	var currentUser;
+	return this.findById(id)
+			.then(function(user){
+				currentUser = user;
+				return Pledge.find({user: id});
+			}).then(function(pledges){
+				currentPledges = pledges;
+				return Cause.find({creator: id});
+			}).then(function(causes){
+				currentUser.pledges = currentPledges.length;
+				currentUser.causes = causes.length;
+				return currentUser.save();
+			}).then(cb);
+};
+
+
+userSchema.statics.findPledgesById = function(id, cb){
+	return Pledge.find({user: id}, cb);
+};
+
+userSchema.statics.findCausesById = function(id, cb){
+	return Cause.find({creator: id}, cb);
+};
+
+userSchema.statics.findCausesByPledgesById = function(id, cb){
+	return Pledge.find({user: id})
+		.then(function(pledges){
+			var causes =[];
+			pledges.forEach(function(pledge){
+				causes.push( pledge.cause);
+			});
+			return Cause.find({'_id': { $in: causes}});
+		});
+};
+
+
 var User = mongoose.model('User', userSchema);
 
 module.exports = User;
