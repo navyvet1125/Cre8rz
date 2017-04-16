@@ -6,7 +6,7 @@ controller.index = function(req, res) {
 	User.find({})
 		.then(function(users){
 			//if it worked
-			res.status(200).send(users);
+			res.status(200).render('users', { title: 'PortHole', users: users});
 		})
 		.catch(function(err){
 			//if it didn't

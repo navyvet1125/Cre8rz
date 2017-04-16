@@ -7,5 +7,16 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <div>
+		<h2>Users</h2>
+		<hr>
+		<% for(var i =0; i<users.length; i++) { %>
+			<h3> <%= users[i].name %> </h3>
+			<p> <%= users[i].city %> </p>
+			<p> <%= users[i].type %> </p>
+			<p> <%= users[i].career %> </p>
+			<hr>
+		<% } %>
+    </div>
   </body>
 </html>
