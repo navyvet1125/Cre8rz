@@ -37,7 +37,7 @@ controller.show = function(req,res){
 	User.findById(req.params.id)
 	.then(function(user){
 		if(user)res.status(200).render('profile', { title: 'PortHole', user: user});
-		else res.status(404).send({status: 404, message:'User not found!'});
+		else res.status(404).render('error',{status: 404, message:'User not found!'});
 	})
 	.catch(function(err){
 		//error handling

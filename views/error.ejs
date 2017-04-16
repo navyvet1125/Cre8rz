@@ -1,3 +1,19 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PortHole - Error</title>
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+  </head>
+  <body>
+    <div class = "container">
+      <div class = "row">
+        <h1> <a href="/">PortHole</a></h1>
+        <h3>A place for artists to be seen</h3>
+      </div>
+      <div class = "row">
+		<h2><%= message %></h2>
+		<h3><%= status %></h3>
+	  </div>
+  </body>
+</html>
