@@ -11,12 +11,12 @@ router.route('/')
 
 // GET, Update, delete specific users
 router.route('/:id')
-	.get(tokens.verify, usersController.show)
-	.put(tokens.verify, usersController.update)
-	.delete(tokens.verify, usersController.delete);
+	.get(usersController.show)
+	.put(usersController.update)
+	.delete(usersController.delete);
 
 // Verify if email exists in system
 router.route('/email/:email')
-	.get(tokens.verify, usersController.verifyEmail);
+	.get(usersController.verifyEmail);
 module.exports = router;
 
