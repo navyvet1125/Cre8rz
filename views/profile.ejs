@@ -16,7 +16,9 @@
       <div class="row">
         <p> Location: <%= user.city %> </p>
         <p> <%= user.type %> </p>
-        <p> Portfolio: <%= user.career %> </p>
+        <% if(user.career !='other') { %>
+          <p> Career: <%= user.career %> </p>
+        <% } %>
         <p> Bio: <textarea class="form-control" rows= 10 readonly="true"><%= user.bio%></textarea> </p>
       </div>
       <footer>
