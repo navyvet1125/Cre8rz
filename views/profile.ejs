@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %> - <%= user.name %></title>
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class = "container">
+      <div class = "row">
+        <h1> <%= title %></h1>
+      </div>
+      <div class="row">
+        <h2> <%= user.name %></h2>
+      </div>
+      <div class="row">
+        <p> Location: <%= user.city %> </p>
+        <p> <%= user.type %> </p>
+        <p> Portfolio: <%= user.career %> </p>
+        <p> Bio: <textarea class="form-control" rows= 10 readonly="true"><%= user.bio%></textarea> </p>
+      </div>
+      <footer>
+        <a href="/users">Back to users</a>
+      </footer>
+    </div>
+  </body>
+</html>

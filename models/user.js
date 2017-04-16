@@ -24,8 +24,10 @@ var userSchema = new mongoose.Schema({
 		'cake',
 		'game',
 		'programmer',
-		'fasion'
-	],default:'artist'},
+		'fasion',
+		'none',
+		'other'
+	],default:'other'},
 	name: {type: String, required:true},
 	avatar: String,
 	email: {type: String, unique:true, required: true},

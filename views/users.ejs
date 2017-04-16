@@ -2,19 +2,22 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   </head>
-  <body>
+  <body class="container">
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
     <div>
 		<h2>Users</h2>
 		<hr>
 		<% for(var i =0; i<users.length; i++) { %>
-			<h3> <%= users[i].name %> <%= users[i].id %></h3>
+			<h3> <a href="/users/<%= users[i].id %>"><%= users[i].name %></a></h3>
 			<p> <%= users[i].city %> </p>
 			<p> <%= users[i].type %> </p>
-			<p> <%= users[i].career %> </p>
+			<% if(users[i].career !='other') { %>
+				<p> <%= users[i].career %> </p>
+			<% } %>
 			<hr>
 		<% } %>
     </div>
