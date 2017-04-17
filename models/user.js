@@ -30,6 +30,7 @@ var userSchema = new mongoose.Schema({
 		'poetry',
 		'other'
 	],default:'other'},
+	login: {type: String, required: true},
 	name: {type: String, required:true},
 	occupation: String,
 	avatar: String,

@@ -13,7 +13,8 @@ User.remove({})
   		return User.create([
     		{
                 name:'Evan Washington', 
-                email:'enavy04@gmail.com', 
+                email:'enavy04@gmail.com',
+                login:'defMethod82',
                 type:'admin', 
                 city:'Los Angeles, CA',
                 career:'website' ,
@@ -21,13 +22,15 @@ User.remove({})
             },
     		{
                 name:'Milyani Rizal', 
-                email:'milly_la@yahoo.com', 
+                email:'milly_la@yahoo.com',
+                login:'milly_la',
                 city:'Culver City, CA', 
                 bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel commodo magna. Mauris sodales turpis orci, sed luctus elit consectetur ac. Morbi maximus pellentesque augue vel pharetra. In vel ligula eu nibh vulputate eleifend eu quis sapien. Donec ac vestibulum nisl. Ut aliquet at elit et venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus metus felis, fringilla vel diam id, rutrum interdum nisi. Quisque ullamcorper, leo et egestas hend' 
             },
     		{
                 name:'Indra Aris', 
-                email:'indra@Aris.com', 
+                email:'indra@Aris.com',
+                login:'the_artist', 
                 type:'artist', 
                 city:'West Hollywood, CA', 
                 career:'fasion',
@@ -43,7 +46,6 @@ User.remove({})
                 url: 'http://www.evanwashington.com',
                 description: 'Evan Washington - Holistic Health Facilitator',
                 content: ['picture url 1','picture url 2', 'picture url 3'],
-                creatorName: seedUser.name,
                 creator: seedUser._id,
                 createdAt: new Date(),
                 likes:[users[1]._id,users[2]._id],
@@ -54,7 +56,6 @@ User.remove({})
                 url: 'http://navyvet1125.github.io/Kingyo_Sukui/',
                 description: 'Get as many goldfish as you can before your scoop breaks.',
                 content: ['picture url 1','picture url 2', 'picture url 3'],
-                creatorName: seedUser.name,
                 creator: seedUser._id,
                 createdAt: new Date(),
                 likes:[users[1]._id,users[2]._id],
@@ -72,7 +73,6 @@ User.remove({})
     	console.log(err);
     })
     .then(function(user){
-        console.log(user);
     	console.log('Database seeded!');
     	process.exit();
     });
