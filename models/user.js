@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Entry = require('./entry');
 var userSchema = new mongoose.Schema({
 	//Artist is someone who uses the website for their portfolio.
 	//Visitors are people who have accounts but do not keep their portfolios on the site
@@ -26,14 +27,21 @@ var userSchema = new mongoose.Schema({
 		'programmer',
 		'fasion',
 		'none',
+		'poetry',
 		'other'
 	],default:'other'},
 	name: {type: String, required:true},
+	occupation: String,
 	avatar: String,
 	email: {type: String, unique:true, required: true},
 	city: String,
 	fb_access_token: String,
+	// Information about the artist
 	bio: String,
+	// Collection of artist's entries
+	portfolio: [{type: mongoose.Schema.Types.ObjectId, ref: 'Entry'}],
+	// A list of followers the artist has.  An array of User Id's
+	followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 //search users by type
