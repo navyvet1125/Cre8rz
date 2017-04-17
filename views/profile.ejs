@@ -20,7 +20,11 @@
         <% if(user.career !='other') { %>
           <p> Career: <%= user.career %> </p>
         <% } %>
+        <p> Followers: <%= user.followers.length%></p>
         <p> Bio: <textarea class="form-control" rows= 10 readonly="true"><%= user.bio%></textarea> </p>
+        <% if(user.portfolio.length) { %>
+          <p> Porfolio: <%= user.portfolio %></p>
+        <% } %>
       </div>
       <footer>
         <a href="/users">Back to users</a>
