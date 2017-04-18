@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User = require('./user');
+var Comment = require('./comment');
 
 var entrySchema = new mongoose.Schema({
 	title: String,												  //Title of the Entry
@@ -15,6 +16,7 @@ var entrySchema = new mongoose.Schema({
 	], default:'pictures'},										  //Type of Entry
 	createdAt: Date,											  //Date the entry was created
 	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],  //People who like the entry
+	comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}], //List of comments
 	approved: {type: Boolean, default: false}  					  //If the entry is approved
 });
 
