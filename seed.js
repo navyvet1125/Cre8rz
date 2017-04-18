@@ -1,13 +1,20 @@
 var db             = require('./config/db');
 var User		   = require('./models/user');
 var Entry          = require('./models/entry');
+var Event          = require('./models/event');
+var Comment        = require('./models/comment');
 
 var seedUser;
 
 //Clear database and reseed it with new information.
 User.remove({})
     .then(function(){
+        console.log('removing entries');
         return Entry.remove();
+    })
+    .then(function(){
+        console.log('removing comments');
+        return Comment.remove();
     })
  	.then(function(){
   		return User.create([
@@ -68,6 +75,21 @@ User.remove({})
         seedUser.portfolio = entries;
         seedUser.followers = entries[0].likes;
         return seedUser.save();
+    })
+    .then(function(user){
+        console.log('making comments');
+        return Comment.create([
+            {
+                subject: user.portfolio[0]._id,
+                creator: user.followers[0]._id,
+                body: 'That is so awesome!',
+            },
+            {
+                subject: user.portfolio[0]._id,
+                creator: user.followers[1]._id,
+                body: 'Amazing!!',
+            } 
+        ]);
     })
     .catch(function(err){
     	console.log(err);
