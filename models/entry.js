@@ -7,9 +7,9 @@ var entrySchema = new mongoose.Schema({
 	url: String,												  //Url if applicable
 	description: String,										  //Text Description
 	content: [ new mongoose.Schema({
-		src: String,
-		desc:String,
-		_id:false})],											  //An array of strings holding either text or url
+		src: String,											  //text or url
+		desc:String,											  //A brief description of the text or url.  Usable as a caption for a picture
+		_id:false})],											  
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, //Creator objectId
 	category: {type: 'String', enum: [
 	    'text',
