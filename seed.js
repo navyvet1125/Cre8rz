@@ -4,8 +4,9 @@ var Entry          = require('./models/entry');
 var Event          = require('./models/event');
 var Comment        = require('./models/comment');
 
-var seedUser;
-var seedEntry;
+var seedUsers;
+var seedEntries;
+var seedComments;
 //Clear database and reseed it with new information.
 User.remove({})
     .then(function(){
@@ -44,15 +45,27 @@ User.remove({})
     	]);
     })
     .then(function(users){
-        seedUser = users[0];
+        seedUsers = users;
         return Entry.create([
             {
                 title: 'evanwashington.com',
                 url: 'http://www.evanwashington.com',
                 description: 'Evan Washington - Holistic Health Facilitator',
-                content: ['picture url 1','picture url 2', 'picture url 3'],
-                creator: seedUser._id,
-                createdAt: new Date(),
+                content: [
+                    {
+                        src:'picture url 1',
+                        desc:'first pic'
+                    },
+                    {
+                        src:'picture url 2',
+                        desc:'second pic'
+                    },
+                    {
+                        src:'picture url 3',
+                        desc:'third pic'
+                    }
+                ],
+                creator: seedUsers[0]._id,
                 likes:[users[1]._id,users[2]._id],
                 approved: true
             },
@@ -60,9 +73,21 @@ User.remove({})
                 title: 'Kingyo Sukui',
                 url: 'http://navyvet1125.github.io/Kingyo_Sukui/',
                 description: 'Get as many goldfish as you can before your scoop breaks.',
-                content: ['picture url 1','picture url 2', 'picture url 3'],
-                creator: seedUser._id,
-                createdAt: new Date(),
+                content: [
+                    {
+                        src:'picture url 1',
+                        desc:'first pic'
+                    },
+                    {
+                        src:'picture url 2',
+                        desc:'second pic'
+                    },
+                    {
+                        src:'picture url 3',
+                        desc:'third pic'
+                    }
+                ],
+                creator: seedUsers[0]._id,
                 likes:[users[1]._id,users[2]._id],
                 approved: true
             },
@@ -70,20 +95,20 @@ User.remove({})
         ]);
     })
     .then(function(entries){
-        seedEntry = entries[0];
-        seedUser.followers = entries[0].likes;
-        return seedUser.save();
+        seedEntries = entries;
+        seedUsers[0].followers = entries[0].likes;
+        return seedUsers[0].save();
     })
     .then(function(user){
         return Comment.create([
             {
-                subject: seedEntry._id,
-                creator: user.followers[0]._id,
+                subject: seedEntries[0]._id,
+                creator: seedUsers[1]._id,
                 body: 'That is so awesome!',
             },
             {
-                subject: seedEntry._id,
-                creator: user.followers[1]._id,
+                subject: seedEntries[0]._id,
+                creator: seedUsers[2]._id,
                 body: 'Amazing!!',
             } 
         ]);
@@ -93,5 +118,14 @@ User.remove({})
     })
     .then(function(results){
     	console.log('Database seeded!');
+        console.log('-------------------------Users-----------------------------------');
+        console.log(seedUsers);
+        console.log('-------------------------Entries---------------------------------');
+        console.log(seedEntries);
+        console.log('-------------------------Comments--------------------------------');
+        console.log(results);
+        console.log('-------------------------Contents of the first entry-------------');
+        console.log(seedEntries[0].content);
+
     	process.exit();
     });

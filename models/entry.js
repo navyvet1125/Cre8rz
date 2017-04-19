@@ -6,10 +6,10 @@ var entrySchema = new mongoose.Schema({
 	title: String,												  //Title of the Entry
 	url: String,												  //Url if applicable
 	description: String,										  //Text Description
-	content: [ new Schema({
+	content: [ new mongoose.Schema({
 		src: String,
 		desc:String,
-		{_id:false}})],											  //An array of strings holding either text or url
+		_id:false})],											  //An array of strings holding either text or url
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, //Creator objectId
 	category: {type: 'String', enum: [
 	    'text',
