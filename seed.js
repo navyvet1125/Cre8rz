@@ -9,11 +9,9 @@ var seedUser;
 //Clear database and reseed it with new information.
 User.remove({})
     .then(function(){
-        console.log('removing entries');
         return Entry.remove();
     })
     .then(function(){
-        console.log('removing comments');
         return Comment.remove();
     })
  	.then(function(){
@@ -77,7 +75,6 @@ User.remove({})
         return seedUser.save();
     })
     .then(function(user){
-        console.log('making comments');
         return Comment.create([
             {
                 subject: user.portfolio[0]._id,
@@ -91,10 +88,15 @@ User.remove({})
             } 
         ]);
     })
+    .then(function(comments) {
+        seedUser.portfolio[0].comments = comments.map(function(item){return item._id;});
+        return seedUser.portfolio[0].save();
+    })
     .catch(function(err){
     	console.log(err);
     })
-    .then(function(user){
+    .then(function(results){
+        console.log(results);
     	console.log('Database seeded!');
     	process.exit();
     });
