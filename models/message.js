@@ -6,8 +6,8 @@ var messageSchema = new mongoose.Schema({
 	receiver: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},		//Who is it for?
 	subject: {type: String, default: 'No Subject'},						//subject
 	body: String,														//Content of the message
-	createdAt: {type: Date, default: Date.now()},						//When it was made
-	readAt: Date,														//When it was read
+	created: {type: Date, default: Date.now()},							//When it was made
+	read: Date,															//When it was read
 	replies:[{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],	//What replies if any
 	isReply: {type: Boolean, default: false}							//Is this message a reply
 });

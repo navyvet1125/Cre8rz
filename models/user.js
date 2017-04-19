@@ -36,7 +36,7 @@ var userSchema = new mongoose.Schema({
 	avatar: String,
 	email: {type: String, unique:true, required: true},
 	city: String,
-	createdAt: Date,
+	created: {type: Date, default: Date.now()},							//When the user was created
 	lastLogin: Date,
 	fb_access_token: String,
 	// Information about the artist

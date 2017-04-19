@@ -14,7 +14,7 @@ var entrySchema = new mongoose.Schema({
 	    'videos', 
 	    'pictures' 
 	], default:'pictures'},										  //Type of Entry
-	createdAt: Date,											  //Date the entry was created
+	created: {type: Date, default: Date.now()},					  //When it was made
 	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],  //People who like the entry
 	approved: {type: Boolean, default: false}  					  //If the entry is approved
 });
