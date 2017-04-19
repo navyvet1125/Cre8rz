@@ -96,7 +96,6 @@ User.remove({})
     	console.log(err);
     })
     .then(function(results){
-        console.log(results);
     	console.log('Database seeded!');
     	process.exit();
     });

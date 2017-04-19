@@ -12,7 +12,6 @@ var eventSchema = new mongoose.Schema({
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, //Creator objectId
 	attendees: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}], //list of people attending
 	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],  //People who like the entry
-	comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}], //List of comments
 	approved: {type: Boolean, default: false}  					  //If the entry is approved
 });
 
