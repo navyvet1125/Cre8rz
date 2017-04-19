@@ -7,6 +7,20 @@ var Comment        = require('./models/comment');
 var seedUsers;
 var seedEntries;
 var seedComments;
+var testContent= JSON.stringify([
+    {
+        src:'picture url 1',
+        desc:'first pic'
+    },
+    {
+        src:'picture url 2',
+        desc:'second pic'
+    },
+    {
+        src:'picture url 3',
+        desc:'third pic'
+    }
+]);
 //Clear database and reseed it with new information.
 User.remove({})
     .then(function(){
@@ -73,20 +87,7 @@ User.remove({})
                 title: 'Kingyo Sukui',
                 url: 'http://navyvet1125.github.io/Kingyo_Sukui/',
                 description: 'Get as many goldfish as you can before your scoop breaks.',
-                content: [
-                    {
-                        src:'picture url 1',
-                        desc:'first pic'
-                    },
-                    {
-                        src:'picture url 2',
-                        desc:'second pic'
-                    },
-                    {
-                        src:'picture url 3',
-                        desc:'third pic'
-                    }
-                ],
+                content: testContent,
                 creator: seedUsers[0]._id,
                 likes:[users[1]._id,users[2]._id],
                 approved: true
@@ -125,7 +126,7 @@ User.remove({})
         console.log('-------------------------Comments--------------------------------');
         console.log(results);
         console.log('-------------------------Contents of the first entry-------------');
-        console.log(seedEntries[0].content);
+        console.log(JSON.parse(testContent));
 
     	process.exit();
     });

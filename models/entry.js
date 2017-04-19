@@ -7,10 +7,7 @@ var entrySchema = new mongoose.Schema({
 	title: String,												  //Title of the Entry
 	url: String,												  //Url if applicable
 	description: String,										  //Text Description
-	content: [ new mongoose.Schema({
-		src: String,											  //text or url
-		desc:String,											  //A brief description of the text or url.  Usable as a caption for a picture
-		_id:false})],											  
+	content: String,											  //stringified JSON object w/'src' for text/picture src and 'desc' for caption
 	category: {type: 'String', enum: [
 	    'text',
 	    'audio',

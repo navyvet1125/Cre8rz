@@ -17,7 +17,7 @@ var endorsementSchema = new mongoose.Schema({
 		'poor',
 		'none'
 	], default:'none'},															 //rating of the endorsement
-	approved: {type:Boolean, default: true}										 //If the endorsement is approved
+	approved: {type:Boolean, default: false}										 //If the endorsement is approved
 });
 
 

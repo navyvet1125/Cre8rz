@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var Entry = require('./entry');
+
 var userSchema = new mongoose.Schema({
 	//Artist is someone who uses the website for their portfolio.
 	//Visitors are people who have accounts but do not keep their portfolios on the site
@@ -44,6 +44,7 @@ var userSchema = new mongoose.Schema({
 	bio: String,
 	// A list of followers the artist has.  An array of User Id's
 	followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+	approved: {type: Boolean, default: false},  					  //If the profile is approved
 	active: {type: Boolean, default: true}  					  //If the profile is active
 });
 
