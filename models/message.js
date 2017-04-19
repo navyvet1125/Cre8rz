@@ -8,16 +8,28 @@ var messageSchema = new mongoose.Schema({
 	body: String,														//Content of the message
 	created: {type: Date, default: Date.now()},							//When it was made
 	read: Date,															//When it was read
-	replies:[{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],	//What replies if any
-	isReply: {type: Boolean, default: false}							//Is this message a reply
+	replyTo:{type: mongoose.Schema.Types.ObjectId, ref: 'Message'},		//What this message is a reply to.
+	forwardOf:{type: mongoose.Schema.Types.ObjectId, ref: 'Message'},	//What this message is a forward of.
+	trashed: Date,														//If and when the message was marked as trash.
+	hidden: Date														//If and when the sender trashed the message.
 });
 
-messageSchema.statics.findBySender = function(sender, cb){				//Find messages by sender
-	return this.find({sender: sender}, cb);
+messageSchema.statics.findBySender = function(sender, all, cb){				//Find messages by sender
+	// Note: If a callback is desired, a truthy or falsy argument must be passed beetween the sender ID and the callback.
+	if(all) return this.find({sender:sender},cb);
+	return this.find({
+		sender: sender,
+		hidden: undefined
+	}, cb);
 };
 
-messageSchema.statics.findByReceiver = function(sender, cb){			//Find messages by recipient
-	return this.find({sender: sender}, cb);
+messageSchema.statics.findByReceiver = function(receiver, all, cb){			//Find messages by recipient
+	// Note: If a callback is desired, a truthy or falsy argument must be passed beetween the receiver ID and the callback.
+	if(all) return this.find({sender:sender},cb);
+	return this.find({
+		receiver: receiver,
+		trashed: undefined
+	}, cb);
 };
 
 

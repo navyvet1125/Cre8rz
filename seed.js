@@ -3,6 +3,7 @@ var User		   = require('./models/user');
 var Entry          = require('./models/entry');
 var Event          = require('./models/event');
 var Comment        = require('./models/comment');
+var Message        = require('./models/message');
 
 var seedUsers;
 var seedEntries;
@@ -28,6 +29,9 @@ User.remove({})
     })
     .then(function(){
         return Comment.remove();
+    })
+    .then(function(){
+        return Message.remove();
     })
  	.then(function(){
   		return User.create([
@@ -65,20 +69,7 @@ User.remove({})
                 title: 'evanwashington.com',
                 url: 'http://www.evanwashington.com',
                 description: 'Evan Washington - Holistic Health Facilitator',
-                content: [
-                    {
-                        src:'picture url 1',
-                        desc:'first pic'
-                    },
-                    {
-                        src:'picture url 2',
-                        desc:'second pic'
-                    },
-                    {
-                        src:'picture url 3',
-                        desc:'third pic'
-                    }
-                ],
+                content:testContent,
                 creator: seedUsers[0]._id,
                 likes:[users[1]._id,users[2]._id],
                 approved: true
@@ -117,16 +108,37 @@ User.remove({})
     .catch(function(err){
     	console.log(err);
     })
-    .then(function(results){
+    .then(function (comments) {
+        seedComments = comments;
+        return Message.create([
+            {
+                sender:seedUsers[0]._id,
+                receiver:seedUsers[1]._id,
+                subject:'Hi!',
+                body:'Hey!  Wanna go get dinner?',
+            },
+            {
+                sender:seedUsers[1]._id,
+                receiver:seedUsers[2]._id,
+                subject:'Hi Mom!',
+                body:'Hi!  How are you?',
+            }
+        ]);
+    })
+    .then(function(messages){
     	console.log('Database seeded!');
         console.log('-------------------------Users-----------------------------------');
         console.log(seedUsers);
         console.log('-------------------------Entries---------------------------------');
         console.log(seedEntries);
         console.log('-------------------------Comments--------------------------------');
-        console.log(results);
+        console.log(seedComments);
         console.log('-------------------------Contents of the first entry-------------');
         console.log(JSON.parse(testContent));
+        console.log('-------------------------Messages--------------------------------');
+        console.log(messages);
+        console.log('-------------------------Testing---------------------------------');
+        if(messages[0].hidden===undefined)console.log(messages[0]);
 
     	process.exit();
     });
