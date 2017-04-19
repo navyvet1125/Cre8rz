@@ -50,10 +50,9 @@ controller.update = function(req,res){
 	Event.findById(req.params.id)
 	.then(function(event){
 		if(req.body.title)event.title = req.body.title;
-		if(req.body.url)event.url = req.body.url;
 		if(req.body.description)event.description = req.body.description;
-		if(req.body.content)event.content = req.body.content;
-		if(req.body.category)event.category = req.body.category;
+		if(req.body.when)event.when = req.body.when;
+		if(req.body.location)event.location = req.body.location;
 		event.modified = Date.now();
 
 		return event.save();

@@ -7,7 +7,7 @@ var eventSchema = new mongoose.Schema({
 	title: String,												  //Title of the Event
 	description: String,										  //Text Description
 	when: {type: Date, required: true},							  //Date and time of the event
-	location: String,											  //Where the event will be
+	location: String,											  //Where the event will be.  Stringified JSON
 	created: {type: Date, default: Date.now()},					  //When it was created
 	modified: Date,												  //Date when modified
 	attendees: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}], //list of people attending
