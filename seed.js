@@ -5,7 +5,7 @@ var Event          = require('./models/event');
 var Comment        = require('./models/comment');
 
 var seedUser;
-
+var seedEntry;
 //Clear database and reseed it with new information.
 User.remove({})
     .then(function(){
@@ -70,27 +70,23 @@ User.remove({})
         ]);
     })
     .then(function(entries){
-        seedUser.portfolio = entries;
+        seedEntry = entries[0];
         seedUser.followers = entries[0].likes;
         return seedUser.save();
     })
     .then(function(user){
         return Comment.create([
             {
-                subject: user.portfolio[0]._id,
+                subject: seedEntry._id,
                 creator: user.followers[0]._id,
                 body: 'That is so awesome!',
             },
             {
-                subject: user.portfolio[0]._id,
+                subject: seedEntry._id,
                 creator: user.followers[1]._id,
                 body: 'Amazing!!',
             } 
         ]);
-    })
-    .then(function(comments) {
-        seedUser.portfolio[0].comments = comments.map(function(item){return item._id;});
-        return seedUser.portfolio[0].save();
     })
     .catch(function(err){
     	console.log(err);

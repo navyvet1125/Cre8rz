@@ -41,8 +41,6 @@ var userSchema = new mongoose.Schema({
 	fb_access_token: String,
 	// Information about the artist
 	bio: String,
-	// Collection of artist's entries
-	portfolio: [{type: mongoose.Schema.Types.ObjectId, ref: 'Entry'}],
 	// A list of followers the artist has.  An array of User Id's
 	followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 	active: {type: Boolean, default: true}  					  //If the profile is active
