@@ -7,6 +7,7 @@ var eventSchema = new mongoose.Schema({
 	description: String,										  //Text Description
 	when: {type: Date, required: true},							  //Date and time of the event
 	created: {type: Date, default: Date.now()},					  //When it was created
+	modified: Date,												  //Date when modified
 	location: String,											  //Where the event will be
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, //Creator objectId
 	attendees: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}], //list of people attending

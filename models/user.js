@@ -37,6 +37,7 @@ var userSchema = new mongoose.Schema({
 	email: {type: String, unique:true, required: true},
 	city: String,
 	created: {type: Date, default: Date.now()},							//When the user was created
+	modified: Date,														//When the user last updated their profile
 	lastLogin: Date,
 	fb_access_token: String,
 	// Information about the artist
