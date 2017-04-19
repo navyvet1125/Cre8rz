@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var User = require('./user');
-var Comment = require('./comment');
 
 var eventSchema = new mongoose.Schema({
 	//The purpose of this model is to enable artists to promote themselves using the site
