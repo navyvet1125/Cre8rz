@@ -3,11 +3,11 @@ var User = require('./user');
 
 var commentSchema = new mongoose.Schema({
 	// A model for comments.  
-	subject:{type: mongoose.Schema.Types.ObjectId, required: true},		//what is being commented on
-	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},		//Who created the comment.
-	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],  		//People who like the comment.
-	body: String,														//The body of the comment.
-	isReply: {type: Boolean, default: false}							//Is this comment a reply to an earlier comment?
+	subject:{type: mongoose.Schema.Types.ObjectId, required: true},					//what is being commented on
+	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},	//Who created the comment.
+	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],  					//People who like the comment.
+	body: String,																	//The body of the comment.
+	isReply: {type: Boolean, default: false}										//Is this comment a reply to an earlier comment?
 });
 
 commentSchema.statics.findByCreator = function(creator, cb){
