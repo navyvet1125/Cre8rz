@@ -1,4 +1,4 @@
-var Comment = require('../models/comments');
+var Comment = require('../models/comment');
 var controller ={};
 
 controller.index = function(req, res) {
@@ -47,11 +47,8 @@ controller.update = function(req,res){
 	//Find and update a comment
 	Comment.findById(req.params.id)
 	.then(function(comment){
-		//if comment has changed then update it and indicate the time it was changed.
-		if(req.body.body && (comment.body!== req.body.body)){
-			comment.body = req.body.body;
-			comment.modified = Date.now();
-		}
+		comment.body = req.body.body;
+		comment.modified = Date.now();
 		return comment.save();
 	})
 	.then(function(comment){

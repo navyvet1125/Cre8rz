@@ -3,6 +3,7 @@ var User = require('./user');
 var Comment = require('./comment');
 
 var entrySchema = new mongoose.Schema({
+	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, //Creator objectId
 	title: String,												  //Title of the Entry
 	url: String,												  //Url if applicable
 	description: String,										  //Text Description
@@ -10,7 +11,6 @@ var entrySchema = new mongoose.Schema({
 		src: String,											  //text or url
 		desc:String,											  //A brief description of the text or url.  Usable as a caption for a picture
 		_id:false})],											  
-	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, //Creator objectId
 	category: {type: 'String', enum: [
 	    'text',
 	    'audio',
@@ -20,7 +20,7 @@ var entrySchema = new mongoose.Schema({
 	created: {type: Date, default: Date.now()},					  //When it was made
 	modified: Date,												  //When the entry was modified.
 	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],  //People who like the entry
-	approved: {type: Boolean, default: false}  					  //If the entry is approved
+	approved: {type: Boolean, default: true}  					  //If the entry is approved
 });
 
 entrySchema.statics.findByCategory = function(category, cb){

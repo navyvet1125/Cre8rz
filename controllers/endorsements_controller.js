@@ -1,4 +1,4 @@
-var Endorsement = require('../models/endorsements');
+var Endorsement = require('../models/endorsement');
 var controller ={};
 
 controller.index = function(req, res) {
@@ -49,22 +49,11 @@ controller.update = function(req,res){
 	//Find and update a endorsement
 	Endorsement.findById(req.params.id)
 	.then(function(endorsement){
-		var changed = false;
 		//if title, body, or rating of the endorsement has changed then update it and indicate the time it was changed.
-		if(req.body.title && (endorsement.title!== req.body.title)){
-			endorsement.title = req.body.title;
-			changed = true;
-		}
-
-		if(req.body.body && (endorsement.body!== req.body.body)){
-			endorsement.body = req.body.body;
-			changed = true;
-		}
-		if(req.body.rating && (endorsement.rating!== req.body.rating)){
-			endorsement.rating = req.body.rating;
-			changed = true;
-		}
-		if(changed) endorsement.modified = Date.now();
+		if(req.body.title)endorsement.title = req.body.title;
+		if(req.body.body)endorsement.body = req.body.body;
+		if(req.body.rating)endorsement.rating = req.body.rating;
+		endorsement.modified = Date.now();
 
 		return endorsement.save();
 	})
