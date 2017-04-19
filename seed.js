@@ -8,6 +8,7 @@ var Message        = require('./models/message');
 var seedUsers;
 var seedEntries;
 var seedComments;
+var seedMessages;
 var testContent= JSON.stringify([
     {
         src:'picture url 1',
@@ -122,8 +123,52 @@ User.remove({})
                 receiver:seedUsers[2]._id,
                 subject:'Hi Mom!',
                 body:'Hi!  How are you?',
+            },
+            {
+                sender:seedUsers[0]._id,
+                receiver:seedUsers[1]._id,
+                subject:'Hi!',
+                body:'Hey!  Wanna go get dinner?',
+                trashed: Date.now()
+            },
+            {
+                sender:seedUsers[1]._id,
+                receiver:seedUsers[2]._id,
+                subject:'Hi Mom!',
+                body:'Hi!  How are you?',
+                hidden: Date.now()
+            },
+            {
+                sender:seedUsers[2]._id,
+                receiver:seedUsers[1]._id,
+                subject:'yo!',
+                body:'Hey!  Wanna go get dinner?',
+            },
+            {
+                sender:seedUsers[0]._id,
+                receiver:seedUsers[2]._id,
+                subject:'Konnichiwa!',
+                body:'Hi!  How are you?',
+            },
+            {
+                sender:seedUsers[1]._id,
+                receiver:seedUsers[2]._id,
+                subject:'Mom!',
+                body:'Hey!  Wanna go get dinner?',
+                hidden: Date.now()
+            },
+            {
+                sender:seedUsers[0]._id,
+                receiver:seedUsers[1]._id,
+                subject:'Hey Sweetie!',
+                body:'Hi!  How are you?',
+                hidden: Date.now()
             }
         ]);
+    })
+    .then(function(messages){
+        seedMessages = messages;
+        return Message.findByReceiver(seedUsers[2]._id);
     })
     .then(function(messages){
     	console.log('Database seeded!');
@@ -136,9 +181,10 @@ User.remove({})
         console.log('-------------------------Contents of the first entry-------------');
         console.log(JSON.parse(testContent));
         console.log('-------------------------Messages--------------------------------');
-        console.log(messages);
+        console.log(seedMessages);
         console.log('-------------------------Testing---------------------------------');
-        if(messages[0].hidden===undefined)console.log(messages[0]);
+        console.log('Subjects:');
+        messages.forEach(function(obj){console.log(obj.subject);});
 
     	process.exit();
     });
