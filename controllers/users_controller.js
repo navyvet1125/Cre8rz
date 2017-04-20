@@ -6,7 +6,7 @@ controller.index = function(req, res) {
 	User.find({})
 		.then(function(users){
 			//if it worked
-			res.status(200).render('users', { title: 'PortHole', users: users});
+			res.status(200).send(users);
 		})
 		.catch(function(err){
 			//if it didn't
@@ -36,7 +36,7 @@ controller.show = function(req,res){
 	//Find and show user if they exist
 	User.findById(req.params.id)
 	.then(function(user){
-		if(user)res.status(200).render('profile', { title: 'PortHole', user: user});
+		if(user)res.status(200).send(user);
 		else res.status(404).render('error',{status: 404, message:'User not found!'});
 	})
 	.catch(function(err){
