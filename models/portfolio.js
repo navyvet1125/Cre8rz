@@ -7,15 +7,15 @@ var portfolioSchema = new mongoose.Schema({
 	description: String,
 	created: {type:Date, default: Date.now()},
 	modified: Date,
-	//Types of portfolios.  Showcase is the default setting.
-	type: {type: String, enum:[
+	//Purpose of the portfolios.  Showcase is the default setting.
+	purpose: {type: String, enum:[
 		'working',
 		'showcase',
 		'assessment',
 		'hybrid'
 	],default:'showcase'},
-	//Purpose for the portfolio.  misc is the default setting.
-	purpose: {type: String, enum:[
+	//Type of portfolio.  misc is the default setting.
+	type: {type: String, enum:[
 		'misc',
 		'modeling',
 		'writing',

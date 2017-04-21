@@ -1,11 +1,13 @@
 var db             = require('./config/db');
 var User		   = require('./models/user');
+var Portfolio          = require('./models/portfolio');
 var Entry          = require('./models/entry');
 var Event          = require('./models/event');
 var Comment        = require('./models/comment');
 var Message        = require('./models/message');
 
 var seedUsers;
+var seedPortfolios;
 var seedEntries;
 var seedComments;
 var seedMessages;
@@ -25,6 +27,9 @@ var testContent= JSON.stringify([
 ]);
 //Clear database and reseed it with new information.
 User.remove({})
+    .then(function(){
+        return Portfolio.remove();
+    })
     .then(function(){
         return Entry.remove();
     })
@@ -65,14 +70,33 @@ User.remove({})
     })
     .then(function(users){
         seedUsers = users;
+        return Portfolio.create([
+            {
+                creator: seedUsers[0]._id,
+                name: 'Evan\'s Projects',
+                description:'All of the projects I made for class',
+                purpose:'assessment',
+                type:'website'
+            },
+            {
+                creator: seedUsers[0]._id,
+                name: 'Evan\'s Sites',
+                description:'All of the websites I made on my own.',
+                purpose:'assessment',
+                type:'website'
+            }
+        ]);
+    })
+    .then(function(portfolios){
+        seedPortfolios = portfolios;
         return Entry.create([
             {
                 title: 'evanwashington.com',
                 url: 'http://www.evanwashington.com',
                 description: 'Evan Washington - Holistic Health Facilitator',
                 content:testContent,
-                creator: seedUsers[0]._id,
-                likes:[users[1]._id,users[2]._id],
+                portfolio: seedPortfolios[1]._id,
+                likes:[seedUsers[1]._id,seedUsers[2]._id],
                 approved: true
             },
             {
@@ -80,8 +104,8 @@ User.remove({})
                 url: 'http://navyvet1125.github.io/Kingyo_Sukui/',
                 description: 'Get as many goldfish as you can before your scoop breaks.',
                 content: testContent,
-                creator: seedUsers[0]._id,
-                likes:[users[1]._id,users[2]._id],
+                portfolio: seedPortfolios[0]._id,
+                likes:[seedUsers[1]._id,seedUsers[2]._id],
                 approved: true
             },
 
@@ -174,6 +198,8 @@ User.remove({})
     	console.log('Database seeded!');
         console.log('-------------------------Users-----------------------------------');
         console.log(seedUsers);
+        console.log('-------------------------Portfolio-------------------------------');
+        console.log(seedPortfolios);
         console.log('-------------------------Entries---------------------------------');
         console.log(seedEntries);
         console.log('-------------------------Comments--------------------------------');
