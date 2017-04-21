@@ -1,25 +1,25 @@
 var mongoose = require('mongoose');
 var User = require('./user');
 
-var Portfolio = new mongoose.Schema({
+var portfolioSchema = new mongoose.Schema({
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	name: {type:String, default:'No Name'},
 	description: String,
 	created: {type:Date, default: Date.now()},
 	modified: Date,
 	//Types of portfolios.  Showcase is the default setting.
-	
-	type: {type: 'String', enum:[
+	type: {type: String, enum:[
 		'working',
 		'showcase',
 		'assessment',
 		'hybrid'
 	],default:'showcase'},
-	//Purpose for the portfolio.  None is the default setting.
-	purpose: {type: 'String', enum:[
-		'none',
+	//Purpose for the portfolio.  misc is the default setting.
+	purpose: {type: String, enum:[
+		'misc',
 		'modeling',
 		'writing',
+		'acting',
 		'advertising',
 		'photographer',
 		'graphic',
@@ -39,5 +39,25 @@ var Portfolio = new mongoose.Schema({
 		'fasion',
 		'poetry',
 		'other'
-	],default:'none'},
+	],default:'misc'},
 });
+
+portfolioSchema.statics.findByCreator = function(creator, cb){
+	return this.find({creator:creator}, cb);
+};
+
+portfolioSchema.statics.findByType = function(type, cb){
+	return this.find({type:type}, cb);
+};
+
+portfolioSchema.statics.findByPurpose = function(purpose, cb){
+	return this.find({purpose:purpose}, cb);
+};
+
+portfolioSchema.statics.findByName = function(name, cb){
+	return this.find({name:name}, cb);
+};
+
+
+var Portfolio = mongoose.model('Portfolio', portfolioSchema);
+module.exports = Portfolio;
