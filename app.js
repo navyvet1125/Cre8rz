@@ -7,11 +7,12 @@ var bodyParser 		= require('body-parser');
 var bluebird 		= require('bluebird');
 var index 			= require('./routes/index');
 var users 			= require('./routes/users');
-var comments 			= require('./routes/comments');
-var endorsements 			= require('./routes/endorsements');
+var portfolios 		= require('./routes/portfolios');
+var entries 		= require('./routes/entries');
+var comments 		= require('./routes/comments');
+var endorsements 	= require('./routes/endorsements');
 var events 			= require('./routes/events');
-var entries 			= require('./routes/entries');
-var messages 			= require('./routes/messages');
+var messages 		= require('./routes/messages');
 var db              = require('./config/db');
 var app 			= express();
 
@@ -29,10 +30,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/portfolios', portfolios);
+app.use('/entries', entries);
 app.use('/comments', comments);
 app.use('/events', events);
 app.use('/endorsements', endorsements);
-app.use('/entries', entries);
 app.use('/messages', messages);
 
 // catch 404 and forward to error handler
