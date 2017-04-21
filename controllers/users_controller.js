@@ -100,4 +100,9 @@ controller.verifyEmail = function(req,res){
 		});
 
 };
+
+controller.logout = function(req,res){
+  req.logout();
+  res.redirect('/');
+};
 module.exports = controller;
