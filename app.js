@@ -13,6 +13,8 @@ var comments 		= require('./routes/comments');
 var endorsements 	= require('./routes/endorsements');
 var events 			= require('./routes/events');
 var messages 		= require('./routes/messages');
+var auth			=require('./routes/auth');
+var passport		= require('passport');
 var db              = require('./config/db');
 var app 			= express();
 
@@ -36,6 +38,7 @@ app.use('/comments', comments);
 app.use('/events', events);
 app.use('/endorsements', endorsements);
 app.use('/messages', messages);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
