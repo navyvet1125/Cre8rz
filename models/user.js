@@ -10,26 +10,7 @@ var userSchema = new mongoose.Schema({
 	    'visitor', 
 	    'admin' 
 	], default:'visitor'},
-	//User career types.  Artist is the default setting.
-	career: {type: 'String', enum:[
-		'modeling',
-		'writing',
-		'advertising',
-		'photographer',
-		'graphic',
-		'website',
-		'make-up',
-		'artist',
-		'interior',
-		'videographer',
-		'cake',
-		'game',
-		'programmer',
-		'fasion',
-		'none',
-		'poetry',
-		'other'
-	],default:'other'},
+	career: {type:String, default:'none'},
 	login: {type: String, required: true},
 	name: {type: String, required:true},
 	occupation: String,

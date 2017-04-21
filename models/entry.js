@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
 var User = require('./user');
-var Comment = require('./comment');
+var Portfolio = require('./portfolio');
 
 var entrySchema = new mongoose.Schema({
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, //Creator objectId
+	portfolio: {type: mongoose.Schema.Types.ObjectId, ref: 'Portfolio'}, //Portfolio objectId
 	title: String,												  //Title of the Entry
 	url: String,												  //Url if applicable
 	description: String,										  //Text Description
@@ -26,6 +27,10 @@ entrySchema.statics.findByCategory = function(category, cb){
 
 entrySchema.statics.findByCreator = function(creator, cb){
 	return this.find({creator: creator}, cb);
+};
+
+entrySchema.statics.findByPortfolio = function(portfolio, cb){
+	return this.find({portfolio: portfolio}, cb);
 };
 
 var Entry = mongoose.model('Entry', entrySchema);
