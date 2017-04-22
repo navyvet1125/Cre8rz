@@ -1,10 +1,13 @@
 var db             = require('./config/db');
 var User		   = require('./models/user');
-var Portfolio          = require('./models/portfolio');
+var Portfolio      = require('./models/portfolio');
 var Entry          = require('./models/entry');
 var Event          = require('./models/event');
 var Comment        = require('./models/comment');
 var Message        = require('./models/message');
+
+var truePass = 'Salamander';
+var falsePass = 'anything really...'
 
 var seedUsers;
 var seedPortfolios;
@@ -48,6 +51,7 @@ User.remove({})
                 type:'admin', 
                 city:'Los Angeles, CA',
                 career:'website' ,
+                password: truePass,
                 bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel commodo magna. Mauris sodales turpis orci, sed luctus elit consectetur ac. Morbi maximus pellentesque augue vel pharetra. In vel ligula eu nibh vulputate eleifend eu quis sapien. Donec ac vestibulum nisl. Ut aliquet at elit et venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus metus felis, fringilla vel diam id, rutrum interdum nisi. Quisque ullamcorper, leo et egestas hend' 
             },
     		{
@@ -195,22 +199,26 @@ User.remove({})
         return Message.findByReceiver(seedUsers[2]._id);
     })
     .then(function(messages){
-    	console.log('Database seeded!');
-        console.log('-------------------------Users-----------------------------------');
-        console.log(seedUsers);
-        console.log('-------------------------Portfolio-------------------------------');
-        console.log(seedPortfolios);
-        console.log('-------------------------Entries---------------------------------');
-        console.log(seedEntries);
-        console.log('-------------------------Comments--------------------------------');
-        console.log(seedComments);
-        console.log('-------------------------Contents of the first entry-------------');
-        console.log(JSON.parse(testContent));
-        console.log('-------------------------Messages--------------------------------');
-        console.log(seedMessages);
-        console.log('-------------------------Testing---------------------------------');
-        console.log('Subjects:');
-        messages.forEach(function(obj){console.log(obj.subject);});
-
-    	process.exit();
+    	// console.log('Database seeded!');
+     //    console.log('-------------------------Users-----------------------------------');
+     //    console.log(seedUsers);
+     //    console.log('-------------------------Portfolio-------------------------------');
+     //    console.log(seedPortfolios);
+     //    console.log('-------------------------Entries---------------------------------');
+     //    console.log(seedEntries);
+     //    console.log('-------------------------Comments--------------------------------');
+     //    console.log(seedComments);
+     //    console.log('-------------------------Contents of the first entry-------------');
+     //    console.log(JSON.parse(testContent));
+     //    console.log('-------------------------Messages--------------------------------');
+     //    console.log(seedMessages);
+     //    console.log('-------------------------Testing---------------------------------');
+        console.log(seedUsers[0]);
+        // seedUsers[0].verifyPassword(falsePass, function(err,result){
+        //     console.log(result);
+        //     seedUsers[0].verifyPassword(truePass, function(err,result){
+        //         console.log(result);
+        //     });
+        // });
+                process.exit();
     });

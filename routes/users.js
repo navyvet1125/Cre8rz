@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var usersController = require('../controllers/users_controller');
-var ensure = require('connect-ensure-login');
+var ensure = require('connect-ensure-login').ensureLoggedIn;
 // var tokens = require('../controllers/tokens_controller');
 
 
 /* GET users listing and create new users*/
 router.route('/')
-	.get(ensure.ensureLoggedIn('/'), usersController.index)
-	.post(ensure.ensureLoggedIn('/'), usersController.create);
+	.get(ensure('/'), usersController.index)
+	.post(ensure('/'), usersController.create);
 
 // GET for NEW restful route
 // router.route('/new')
@@ -17,8 +17,8 @@ router.route('/')
 // GET, Update, delete specific users
 router.route('/:id')
 	.get(usersController.show)
-	.put(ensure.ensureLoggedIn('/'), usersController.update)
-	.delete(ensure.ensureLoggedIn('/'), usersController.delete);
+	.put(ensure('/'), usersController.update)
+	.delete(ensure('/'), usersController.delete);
 
 // GET for EDIT restful route
 // router.route('/:id/edit')
@@ -27,6 +27,6 @@ router.route('/:id')
 
 // Verify if email exists in system
 router.route('/email/:email')
-	.get(ensure.ensureLoggedIn('/'), usersController.verifyEmail);
+	.get(ensure('/'), usersController.verifyEmail);
 module.exports = router;
 
