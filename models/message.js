@@ -25,7 +25,7 @@ messageSchema.statics.findBySender = function(sender, all, cb){				//Find messag
 
 messageSchema.statics.findByReceiver = function(receiver, all, cb){			//Find messages by recipient
 	// Note: If a callback is desired, a truthy or falsy argument must be passed beetween the receiver ID and the callback.
-	if(all) return this.find({sender:sender},cb);
+	if(all) return this.find({receiver:receiver},cb);
 	return this.find({
 		receiver: receiver,
 		trashed: undefined

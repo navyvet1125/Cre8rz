@@ -4,20 +4,7 @@ var controller ={};
 controller.index = function(req, res) {
 	// Returns listing of all non-trashed messages by receiver
 	// Note: If a callback is desired, a truthy or falsy argument must be passed beetween the receiver ID and the callback.
-	Message.find({})
-		.then(function(messages){
-			//if it worked
-			res.status(200).send(messages);
-		})
-		.catch(function(err){
-			//if it didn't
-			res.status(500).send(err);
-		});
-};
-controller.received = function(req, res) {
-	// Returns listing of all non-trashed messages by receiver
-	// Note: If a callback is desired, a truthy or falsy argument must be passed beetween the receiver ID and the callback.
-	Message.findByReceiver(req.params.id)
+	Message.findByReceiver(req.user._id)
 		.then(function(messages){
 			//if it worked
 			res.status(200).send(messages);
@@ -30,7 +17,7 @@ controller.received = function(req, res) {
 controller.sent = function(req, res) {
 	// Returns listing of all non-hidden messages by sender
 	// Note: If a callback is desired, a truthy or falsy argument must be passed beetween the sender ID and the callback.
-	Message.findBySender(req.params.id)
+	Message.findBySender(req.user._id)
 		.then(function(messages){
 			//if it worked
 			res.status(200).send(messages);

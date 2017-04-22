@@ -6,7 +6,8 @@ var authController = require('../controllers/auth_controller');
 require('../config/passport')(passport);
 
 router.route('/local')
-	.post(passport.authenticate('local', { failureRedirect: '/login' }), authController.auth)
+	.post(passport.authenticate('local', { failureRedirect: '/' }), authController.auth);
+
 
 router.route('/facebook')
 	.get(passport.authenticate('facebook', {scope: 'email', failureRedirect: '/auth/error'}));

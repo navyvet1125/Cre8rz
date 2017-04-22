@@ -3,7 +3,6 @@ var controller ={};
 
 controller.index = function(req, res) {
 	//Returns listing of all users
-	console.log(req);
 	User.find({})
 		.then(function(users){
 			//if it worked

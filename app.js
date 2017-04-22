@@ -5,6 +5,9 @@ var logger 			= require('morgan');
 var cookieParser 	= require('cookie-parser');
 var bodyParser 		= require('body-parser');
 var bluebird 		= require('bluebird');
+var passport		= require('passport');
+var expressSession = require('express-session');
+
 var index 			= require('./routes/index');
 var users 			= require('./routes/users');
 var portfolios 		= require('./routes/portfolios');
@@ -13,8 +16,7 @@ var comments 		= require('./routes/comments');
 var endorsements 	= require('./routes/endorsements');
 var events 			= require('./routes/events');
 var messages 		= require('./routes/messages');
-var auth			=require('./routes/auth');
-var passport		= require('passport');
+var auth			= require('./routes/auth');
 var db              = require('./config/db');
 var app 			= express();
 
@@ -28,6 +30,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(expressSession({secret: 'mySecretKey', resave: false, saveUninitialized: false}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
@@ -39,7 +45,7 @@ app.use('/events', events);
 app.use('/endorsements', endorsements);
 app.use('/messages', messages);
 app.use('/auth', auth);
-
+// require('./config/passport')(passport);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

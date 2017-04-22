@@ -1,6 +1,4 @@
 var mongoose 	= require('mongoose');
-// var Promise = require("bluebird")
-// var bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'));
 
 var userSchema = new mongoose.Schema({
 	//Artist is someone who uses the website for their portfolio.
@@ -16,13 +14,15 @@ var userSchema = new mongoose.Schema({
 	login: {type: String, required: true},
 	name: {type: String, required:true},
 	occupation: String,
-	avatar: String,
+	fb_avatar: String,
+	google_avatar: String,
 	email: {type: String, unique:true, required: true},
 	city: String,
 	created: {type: Date, default: Date.now()},							//When the user was created
 	modified: Date,														//When the user last updated their profile
 	lastLogin: Date,
 	fb_access_token: String,
+	google_access_token: String,
 	password: String,
 	// Information about the artist
 	bio: String,

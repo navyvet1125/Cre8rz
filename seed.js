@@ -6,14 +6,10 @@ var Event          = require('./models/event');
 var Comment        = require('./models/comment');
 var Message        = require('./models/message');
 
-var truePass = 'Salamander';
-var falsePass = 'anything really...'
-
+var truePass='Salamander';
 var seedUsers;
 var seedPortfolios;
 var seedEntries;
-var seedComments;
-var seedMessages;
 var testContent= JSON.stringify([
     {
         src:'picture url 1',
@@ -120,7 +116,7 @@ User.remove({})
         seedUsers[0].followers = entries[0].likes;
         return seedUsers[0].save();
     })
-    .then(function(user){
+    .then(function(){
         return Comment.create([
             {
                 subject: seedEntries[0]._id,
@@ -134,15 +130,17 @@ User.remove({})
             } 
         ]);
     })
-    .catch(function(err){
-    	console.log(err);
-    })
-    .then(function (comments) {
-        seedComments = comments;
+    .then(function () {
         return Message.create([
             {
                 sender:seedUsers[0]._id,
                 receiver:seedUsers[1]._id,
+                subject:'Hi!',
+                body:'Hey!  Wanna go get dinner?',
+            },
+            {
+                sender:seedUsers[1]._id,
+                receiver:seedUsers[0]._id,
                 subject:'Hi!',
                 body:'Hey!  Wanna go get dinner?',
             },
@@ -179,6 +177,12 @@ User.remove({})
                 body:'Hi!  How are you?',
             },
             {
+                sender:seedUsers[2]._id,
+                receiver:seedUsers[0]._id,
+                subject:'Konnichiwa!',
+                body:'Hi!  How are you?',
+            },
+            {
                 sender:seedUsers[1]._id,
                 receiver:seedUsers[2]._id,
                 subject:'Mom!',
@@ -194,31 +198,12 @@ User.remove({})
             }
         ]);
     })
-    .then(function(messages){
-        seedMessages = messages;
-        return Message.findByReceiver(seedUsers[2]._id);
+    .then(function(){
+        console.log('Database Seeded');
     })
-    .then(function(messages){
-    	// console.log('Database seeded!');
-     //    console.log('-------------------------Users-----------------------------------');
-     //    console.log(seedUsers);
-     //    console.log('-------------------------Portfolio-------------------------------');
-     //    console.log(seedPortfolios);
-     //    console.log('-------------------------Entries---------------------------------');
-     //    console.log(seedEntries);
-     //    console.log('-------------------------Comments--------------------------------');
-     //    console.log(seedComments);
-     //    console.log('-------------------------Contents of the first entry-------------');
-     //    console.log(JSON.parse(testContent));
-     //    console.log('-------------------------Messages--------------------------------');
-     //    console.log(seedMessages);
-     //    console.log('-------------------------Testing---------------------------------');
-        console.log(seedUsers[0]);
-        // seedUsers[0].verifyPassword(falsePass, function(err,result){
-        //     console.log(result);
-        //     seedUsers[0].verifyPassword(truePass, function(err,result){
-        //         console.log(result);
-        //     });
-        // });
-                process.exit();
+    .catch(function(err){
+        console.log(err);
+    })
+    .then(function(){
+        process.exit();
     });
