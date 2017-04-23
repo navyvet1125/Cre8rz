@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title><%= title %></title>
+  </head>
+  <body>
+     <div class = "container">
+       <nav class="navbar navbar">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" ui-sref="home" >PortHole</a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="btn-group">
+                <a href="/messages" class="btn btn-primary">Messages</a>
+                <a href="/portfolios" class="btn btn-primary">Portfolios</a>
+                <a href="/events" class="btn btn-primary">Events</a>
+                <a href="/users" class="btn btn-primary">Search</a>
+                <a href="/logout" class="btn btn-primary">Log Out</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <article>
+        <section>
+          <h1><%= title %></h1>
+          <div class= "row">
+            <div class = "col-md-3">
+              <h2>Welcome</h2> 
+              <% if(user.fb_avatar){ %>
+                <img src="<%= user.fb_avatar%>"/>
+              <% } else if (user.google_avatar) { %>
+                <img src="<%= user.google_avatar%>"/>
+              <% } else { %>
+                <p>No Picture!</p>
+              <% } %>
+              <h3> <%= user.name %></h3>
+              <hr>
+            </div> 
+            <div class="col-md-6 col-md-offset-3">
+              <h3>Location</h3>
+              <h4><%= user.city %></h4>
+              <h3>Bio</h3>
+              <p>
+                <%=user.bio %>
+              </p>
+            </div> 
+          </div>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

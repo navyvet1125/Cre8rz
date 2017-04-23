@@ -1,8 +1,8 @@
 var controller = {};
 
 controller.auth =function(req, res){
-	if(req.user.type ==='admin') res.redirect('/users');
-	else res.redirect('/users');
+	if(req.user.type ==='admin') res.redirect('/dashboard');
+	else res.redirect('/dashboard');
 };
 
 controller.error = function(req, res){
