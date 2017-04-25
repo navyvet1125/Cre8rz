@@ -18,6 +18,7 @@ controller.dashboard = function(req, res, next) {
 	var userEvents = [];
 	var userMadeEvents = [];
 	var userMessages =[];
+	var numOfNewMessages = 0;
 	var following = [];
 	var userId = req.user.id;
 
@@ -40,6 +41,10 @@ controller.dashboard = function(req, res, next) {
 	})
 	.then(function(messages){
 		if(messages)userMessages = messages;
+			return Message.findByReceiver(userId,'new');
+	})
+	.then(function(messages){
+		if(messages)numOfNewMessages = messages.length;
 		return User.find({followers: {$in: [userId]}});
 	})
 	.then(function(users){
@@ -58,7 +63,10 @@ controller.dashboard = function(req, res, next) {
 				created:userMadeEvents,
 				attending: userEvents
 			},
-			messages: userMessages,
+			messages: {
+				userMessages,
+				numOfNewMessages
+			},
 			following: following
 		});
     	

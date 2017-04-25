@@ -31,19 +31,25 @@
         <section>
           <h1><%= title %></h1>
           <div class= "row">
-            <div class = "col-md-3">
-              <h2>Welcome</h2> 
-              <% if(user.fb_avatar){ %>
-                <img src="<%= user.fb_avatar%>"/>
-              <% } else if (user.google_avatar) { %>
-                <img src="<%= user.google_avatar%>"/>
-              <% } else { %>
-                <p>No Picture!</p>
-              <% } %>
-              <h3> <%= user.name %></h3>
+            <div class = "col-md-2">
+              <div class = "row">
+                <h2>Welcome</h2> 
+                <% if(user.fb_avatar){ %>
+                  <img src="<%= user.fb_avatar%>"/>
+                <% } else if (user.google_avatar) { %>
+                  <img src="<%= user.google_avatar%>"/>
+                <% } else { %>
+                  <p>No Picture!</p>
+                <% } %>
+                <h3> <%= user.name %></h3>
+              </div>
               <hr>
+              <div class="row">
+                <h3>Messages</h3>
+                <%= messages.numOfNewMessages %>
+              </div>
             </div> 
-            <div class="col-md-4 col-md-offset-5">
+            <div class="col-md-3 col-md-offset-7">
               <div class="row">
                 <h3>Location</h3>
                 <h4><%= user.city %></h4>
@@ -58,10 +64,10 @@
               <hr>
               <div class="row">
                 <h3>Upcomming Events:</h3>
-                <% if (events.created.length){ %>
+                <% if (events.attending.length){ %>
                   <ul>
-                    <% for(var i =0; i< events.created.length;i++){ %>
-                      <li> <%= events.created[i].title %></li>
+                    <% for(var i =0; (i< events.attending.length || i===10);i++){ %>
+                      <li> <%= events.attending[i].title %></li>
                     <% } %>
                   </ul>
                 <% } else {%>

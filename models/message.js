@@ -14,24 +14,41 @@ var messageSchema = new mongoose.Schema({
 	hidden: Date														//If and when the sender trashed the message.
 });
 
-messageSchema.statics.findBySender = function(sender, all, cb){				//Find messages by sender
-	// Note: If a callback is desired, a truthy or falsy argument must be passed beetween the sender ID and the callback.
-	if(all) return this.find({sender:sender},cb);
-	return this.find({
+messageSchema.statics.findBySender = function(sender, type, cb){				//Find messages by sender
+	// Note: Will default to sending only unhidden messages.
+	if(type==='all') {
+		return this.find({sender:sender},cb);
+	}
+	else if(type==='new'){
+		return this.find({
+			sender: sender, 
+			hidden: undefined, 
+			read: undefined
+		},cb);
+	}
+	else return this.find({
 		sender: sender,
 		hidden: undefined
 	}, cb);
 };
 
-messageSchema.statics.findByReceiver = function(receiver, all, cb){			//Find messages by recipient
-	// Note: If a callback is desired, a truthy or falsy argument must be passed beetween the receiver ID and the callback.
-	if(all) return this.find({receiver:receiver},cb);
-	return this.find({
+messageSchema.statics.findByReceiver = function(receiver, type, cb){			//Find messages by recipient
+	// Note: Will default to sending only messages that were not trashed.
+	if(type==='all') {
+		return this.find({receiver:receiver},cb);
+	}
+	else if(type==='new'){
+		return this.find({
+			receiver:receiver, 
+			trashed: undefined, 
+			read: undefined
+		},cb);
+	}
+	else return this.find({
 		receiver: receiver,
 		trashed: undefined
 	}, cb);
 };
-
 
 var Message = mongoose.model('Message', messageSchema);
 
