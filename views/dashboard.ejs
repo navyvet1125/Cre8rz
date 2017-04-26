@@ -46,10 +46,14 @@
               <hr>
               <div class="row">
                 <h3>Messages</h3>
-                <%= messages.numOfNewMessages %>
+                <% if(messages.numOfNewMessages) { %>
+                  <p>
+                    New Messages: <a href="/messages"><%= messages.numOfNewMessages %></a>
+                  </p>
+                <% } %>
               </div>
             </div> 
-            <div class="col-md-3 col-md-offset-7">
+            <div class="col-md-2 col-md-offset-8">
               <div class="row">
                 <h3>Location</h3>
                 <h4><%= user.city %></h4>
