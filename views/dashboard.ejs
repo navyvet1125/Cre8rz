@@ -53,7 +53,17 @@
                 <% } %>
               </div>
             </div> 
-            <div class="col-md-2 col-md-offset-8">
+            <div class="col-md-8">
+              <div class="row">
+                <h2>News Feed</h2>              
+              </div>
+              <% for(var i = 0; i < newsFeed.length; i++){ %>
+                <div class ="row">
+                  <%- newsFeed[i].title %> - <%= newsFeed[i].created %>
+                </div>
+              <% } %>
+            </div>
+            <div class="col-md-2">
               <div class="row">
                 <h3>Location</h3>
                 <h4><%= user.city %></h4>

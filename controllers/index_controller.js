@@ -1,3 +1,4 @@
+var Activity	= require('../models/activity');
 var Portfolio = require('../models/portfolio');
 var Endorsememt = require('../models/endorsement');
 var Entry = require('../models/entry');
@@ -20,6 +21,7 @@ controller.dashboard = function(req, res, next) {
 	var userMessages =[];
 	var numOfNewMessages = 0;
 	var following = [];
+	var userActivities =[];
 	var userId = req.user.id;
 
 	Portfolio.find({creator: userId})
@@ -49,6 +51,10 @@ controller.dashboard = function(req, res, next) {
 	})
 	.then(function(users){
 		if(users)following = users;
+		return Activity.find({receivers:{$in:[userId]}});
+	})
+	.then(function(activities){
+		if(activities) userActivities = activities;
 	})
 	.catch(function(err){
         res.render('error',{message: err});
@@ -67,7 +73,8 @@ controller.dashboard = function(req, res, next) {
 				userMessages,
 				numOfNewMessages
 			},
-			following: following
+			following: following,
+			newsFeed: userActivities
 		});
     	
     })

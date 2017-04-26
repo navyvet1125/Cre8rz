@@ -5,6 +5,7 @@ var Entry          = require('./models/entry');
 var Event          = require('./models/event');
 var Comment        = require('./models/comment');
 var Message        = require('./models/message');
+var Activity        = require('./models/activity');
 
 var truePass='Salamander';
 var seedUsers;
@@ -27,6 +28,9 @@ var testContent= JSON.stringify([
 //Clear database and reseed it with new information.
 User.remove({})
     .then(function(){
+        return Activity.remove();
+    })
+    .then(function(){
         return Portfolio.remove();
     })
     .then(function(){
@@ -45,7 +49,7 @@ User.remove({})
                 email:'enavy04@gmail.com',
                 login:'defMethod82',
                 type:'admin', 
-                city:'Los Angeles, CA',
+                city:'Inglewood, CA',
                 career:'website' ,
                 password: truePass,
                 bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel commodo magna. Mauris sodales turpis orci, sed luctus elit consectetur ac. Morbi maximus pellentesque augue vel pharetra. In vel ligula eu nibh vulputate eleifend eu quis sapien. Donec ac vestibulum nisl. Ut aliquet at elit et venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus metus felis, fringilla vel diam id, rutrum interdum nisi. Quisque ullamcorper, leo et egestas hend' 
@@ -114,6 +118,17 @@ User.remove({})
     .then(function(entries){
         seedEntries = entries;
         seedUsers[0].followers = entries[0].likes;
+        return seedUsers[0].save();
+    })
+    .then(function(){
+        seedUsers[0].name = 'Evan J. Washington';
+        return seedUsers[0].save();
+    })
+    .then(function(){
+        seedUsers[0].city = 'Los Angeles, CA';
+        return seedUsers[0].save();
+    })
+    .then(function(){
         return seedUsers[0].save();
     })
     .then(function(){
@@ -199,6 +214,11 @@ User.remove({})
         ]);
     })
     .then(function(){
+        return Activity.find({})
+    })
+    .then(function(activities){
+        console.log(activities);
+        console.log(seedUsers[0]);
         console.log('Database Seeded');
     })
     .catch(function(err){

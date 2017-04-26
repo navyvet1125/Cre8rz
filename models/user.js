@@ -1,6 +1,6 @@
 var mongoose 	= require('mongoose');
-
-var userSchema = new mongoose.Schema({
+var Activity	= require('./activity');
+var userSchema  = new mongoose.Schema({
 	//Artist is someone who uses the website for their portfolio.
 	//Visitors are people who have accounts but do not keep their portfolios on the site
 	//Admin users can add or remove anyone, change anyone's type, and can add,
@@ -10,22 +10,22 @@ var userSchema = new mongoose.Schema({
 	    'visitor', 
 	    'admin' 
 	], default:'visitor'},
+	//User Mutable
 	career: {type:String, default:'none'},
-	login: {type: String, required: true},
 	name: {type: String, required:true},
-	occupation: String,
+	bio: String,														// Information about the artist
+	city: String,
+	password: String,
+	//User Immutable
+	login: {type: String, unique: true},
 	fb_avatar: String,
 	google_avatar: String,
 	email: {type: String, unique:true, required: true},
-	city: String,
 	created: {type: Date, default: Date.now()},							//When the user was created
 	modified: Date,														//When the user last updated their profile
 	lastLogin: Date,
 	fb_access_token: String,
 	google_access_token: String,
-	password: String,
-	// Information about the artist
-	bio: String,
 	// A list of followers the artist has.  An array of User Id's
 	followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 	approved: {type: Boolean, default: false},  					  //If the profile is approved
@@ -56,6 +56,29 @@ userSchema.statics.searchNameAndType = function(name, type, cb){
 		return cb(err, person);
 	});
 };
+
+userSchema.pre('save',function(next){
+	//If there is a change to an already created user, then generate a new activity.
+	if(!this.isNew && (this.isModified('career')||this.isModified('city')||this.isModified('bio')||this.isModified('name'))){
+		this.activity = new Activity();
+		// Activity needs: picture, title, body, receivers
+		this.activity.picture = (this.fb_avatar)? this.fb_avatar: this.google_avatar;
+		this.activity.title = '<b>'+this.name + '</b> has updated their profile.';
+		this.activity.receivers = this.followers;
+		this.activity.receivers.unshift(this._id);
+	}
+	next();
+});
+
+userSchema.post('save', function(doc){
+	if(this.activity) {
+		this.activity.save()
+		.then(function(activity){
+			delete this.activity;
+		});
+	}
+});
+
 var User = mongoose.model('User', userSchema);
 
 module.exports = User;
