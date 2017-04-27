@@ -11,6 +11,7 @@ var truePass='Salamander';
 var seedUsers;
 var seedPortfolios;
 var seedEntries;
+var seedEvents;
 var testContent= JSON.stringify([
     {
         src:'picture url 1',
@@ -29,6 +30,9 @@ var testContent= JSON.stringify([
 User.remove({})
     .then(function(){
         return Activity.remove();
+    })
+    .then(function(){
+        return Event.remove();
     })
     .then(function(){
         return Portfolio.remove();
@@ -52,6 +56,7 @@ User.remove({})
                 city:'Inglewood, CA',
                 career:'website' ,
                 password: truePass,
+                fb_avatar: 'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/18119218_1528654097146672_4683834936590170197_n.jpg?oh=bdfb91b42460c04f77c9764446ecb341&amp;oe=59976472',
                 bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel commodo magna. Mauris sodales turpis orci, sed luctus elit consectetur ac. Morbi maximus pellentesque augue vel pharetra. In vel ligula eu nibh vulputate eleifend eu quis sapien. Donec ac vestibulum nisl. Ut aliquet at elit et venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus metus felis, fringilla vel diam id, rutrum interdum nisi. Quisque ullamcorper, leo et egestas hend' 
             },
     		{
@@ -214,10 +219,34 @@ User.remove({})
         ]);
     })
     .then(function(){
-        return Activity.find({})
+        return Event.create([
+            {
+                creator: seedUsers[0]._id,
+                title: 'This is a test!',
+                description: 'Testing to see if this works...',
+                location:'Anywhere, U.S.A.',
+                when: new Date("03/30/2018 21:25"),
+                attendees: seedUsers.map(function(key){return key._id;}),
+                likes: seedUsers.map(function(key){return key._id;}),
+                approved: true
+            },
+            {
+                creator: seedUsers[1]._id,
+                title: 'Seminar practice!',
+                description: 'Testing to see if this works...',
+                location:'Culver City, CA',
+                when: new Date("04/28/2017 19:30"),
+                attendees: seedUsers.map(function(key){return key._id;}),
+                likes: seedUsers.map(function(key){return key._id;}),
+                approved: true
+            },
+        ]);
+    })
+    .then(function(events){
+        seedEvents = events;
+        return Activity.find({});
     })
     .then(function(activities){
-        console.log(activities);
         console.log(seedUsers[0]);
         console.log('Database Seeded');
     })

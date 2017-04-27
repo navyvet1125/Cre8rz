@@ -9,6 +9,7 @@ var activitySchema = new mongoose.Schema({
 	//the body of the activity,
 	//and on whose feeds the activity will post.
 	created: {type: Date, default: Date.now()},
+	name: String,
 	picture: String,
 	title: String,
 	body: String,

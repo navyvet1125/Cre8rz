@@ -1,98 +1,172 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <title><%= title %></title>
-  </head>
-  <body>
-     <div class = "container">
-       <nav class="navbar navbar">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" ui-sref="home" >PortHole</a>
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="#">PortHole</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Messages</a></li>
+          <li><a href="#">Portfolios</a></li>
+          <li><a href="#">Events</a></li>
+          <li><a href="#">Search</a></li>
+          <li><a href="/logout">Log Out</a></li>
+        </ul>
+        <form class="navbar-form navbar-right" role="search">
+          <div class="form-group input-group">
+            <input type="text" class="form-control" placeholder="Search..">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">
+                <span class="glyphicon glyphicon-search"></span>
+              </button>
+            </span>        
           </div>
-          <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav navbar-right">
-              <li class="btn-group">
-                <a href="/messages" class="btn btn-primary">Messages</a>
-                <a href="/portfolios" class="btn btn-primary">Portfolios</a>
-                <a href="/events" class="btn btn-primary">Events</a>
-                <a href="/users" class="btn btn-primary">Search</a>
-                <a href="/logout" class="btn btn-primary">Log Out</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <article>
-        <section>
-          <h1><%= title %></h1>
-          <div class= "row">
-            <div class = "col-md-2">
-              <div class = "row">
-                <h2>Welcome</h2> 
-                <% if(user.fb_avatar){ %>
-                  <img src="<%= user.fb_avatar%>"/>
-                <% } else if (user.google_avatar) { %>
-                  <img src="<%= user.google_avatar%>"/>
-                <% } else { %>
-                  <p>No Picture!</p>
-                <% } %>
-                <h3> <%= user.name %></h3>
-              </div>
-              <hr>
-              <div class="row">
-                <h3>Messages</h3>
-                <% if(messages.numOfNewMessages) { %>
-                  <p>
-                    New Messages: <a href="/messages"><%= messages.numOfNewMessages %></a>
-                  </p>
-                <% } %>
-              </div>
-            </div> 
-            <div class="col-md-8">
-              <div class="row">
-                <h2>News Feed</h2>              
-              </div>
-              <% for(var i = 0; i < newsFeed.length; i++){ %>
-                <div class ="row">
-                  <%- newsFeed[i].title %> - <%= newsFeed[i].created %>
-                </div>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  
+    <div class="container text-center">    
+        <div class="row">
+          <div class="col-sm-3 well">
+            <div class="well">
+              <p><a href="#">My Profile</a></p>
+              <% if(user.fb_avatar){ %>
+                <img src="<%= user.fb_avatar%>" class="img-circle" width="50%"  alt="<%= user.name %>"/>
+              <% } else if (user.google_avatar) { %>
+                <img src="<%= user.google_avatar%>" class="img-circle" width="50%"  alt="<%= user.name %>"/>
+              <% } else { %>
+                <p>No Picture!</p>
+              <% } %>
+              <h3>Location</h3>
+              <h4><%= user.city %></h4>
+            </div>
+            <div class="well">
+              <p><a href="#">Interests</a></p>
+              <p>
+                <span class="label label-default">News</span>
+                <span class="label label-primary">W3Schools</span>
+                <span class="label label-success">Labels</span>
+                <span class="label label-info">Football</span>
+                <span class="label label-warning">Gaming</span>
+                <span class="label label-danger">Friends</span>
+              </p>
+            </div>
+            <div class="well">
+              <h3>Messages</h3>
+              <% if(messages.numOfNewMessages) { %>
+                <p>
+                  New Messages: <a href="/messages"><%= messages.numOfNewMessages %></a>
+                </p>
               <% } %>
             </div>
-            <div class="col-md-2">
-              <div class="row">
-                <h3>Location</h3>
-                <h4><%= user.city %></h4>
-              </div>
-              <hr>
-              <div class="row">
-                <h3>Bio</h3>
-                <p>
-                  <%=user.bio %>
-                </p>
-              </div>
-              <hr>
-              <div class="row">
-                <h3>Upcomming Events:</h3>
-                <% if (events.attending.length){ %>
-                  <ul>
-                    <% for(var i =0; (i< events.attending.length || i===10);i++){ %>
-                      <li> <%= events.attending[i].title %></li>
-                    <% } %>
-                  </ul>
-                <% } else {%>
-                  <p>No upcomming events</p>
-                <% } %>
-              </div>
-              <hr>
-            </div> 
+
+            <div class="alert alert-success fade in">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+              <p><strong>Ey!</strong></p>
+              People are looking at your profile. Find out who.
+            </div>
+            <p><a href="#">Link</a></p>
+            <p><a href="#">Link</a></p>
+            <p><a href="#">Link</a></p>
           </div>
-        </section>
-      </article>
+           <div class="col-md-7">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="panel panel-default text-left">
+                  <div class="panel-body">
+                    <p contenteditable="true">Status: Feeling Fine</p>
+                    <button type="button" class="btn btn-default btn-sm">
+                      <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                    </button>     
+                  </div>
+                </div>
+              </div>
+            </div>        
+          <div class="row">
+            <h2>News Feed</h2>              
+          </div>
+          <% for(var i = 0; i < newsFeed.length; i++){ %>
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="well">
+                <% if(newsFeed[i].picture) { %>
+                  <img src="<%= newsFeed[i].picture %>" class="img-circle" height="55" width="55" alt="<%= newsFeed[i].name %>">
+                <% } else { %>
+                 <img src="/images/no-image.png" class="img-circle" height="55" width="55" alt="<%= newsFeed[i].name %>">
+                <% } %>
+                 <p><%= newsFeed[i].name %></p>
+                </div>
+              </div>
+              <div class="col-sm-9">
+                <div class="well">
+                  <%- newsFeed[i].title %>
+                  <p><%= newsFeed[i].created %></p>
+                </div>
+              </div>
+            </div>     
+          <% } %>
+        </div>
+        <div class="col-md-2">
+          <div class="row">
+            <div class="thumbnail">
+              <h3>Upcoming Events:</h3>
+              
+            <% if (events.length){ %>
+              <% for(var i =0; (i< events.length || i===10);i++){ %>
+                <% if(events[i].picture){ %>
+                  <img src="<%= events[i].picture %>" alt="<%= events[i].title %>" width="400" height="300">
+                <%} else { %>
+                  <img src="/images/no-image.png" width="400" height="300" alt="<%= events[i].title %>">
+                <% } %>
+                <p><strong><%= events[i].title %></strong></p>
+                <p><%= events[i].when %></p>
+                <button class="btn btn-primary">Info</button>
+              <% } %>
+            <% } else {%>
+              <p>No upcomming events</p>
+            <% } %>
+           </div>      
+          </div>
+          <hr>
+          <div class="row">
+            <h3>Bio</h3>
+            <p>
+              <%=user.bio %>
+            </p>
+          </div>
+          <hr>
+          <hr>
+        </div> 
+      </div>
     </div>
-  </body>
+</body>
 </html>

@@ -31,10 +31,6 @@ controller.dashboard = function(req, res, next) {
 	})
 	.then(function(endorsements){
 		if(endorsements)userEndorsements = endorsements;
-		return Event.find({creator: userId});
-	})
-	.then(function(events){
-		if(events)userMadeEvents = events;
 		return Event.find({attendees: {$in: [userId]}});
 	})
 	.then(function(events){
@@ -65,10 +61,7 @@ controller.dashboard = function(req, res, next) {
 			user:req.user, 
 			portfolios: userPortfolios,
 			endorsements: userEndorsements,
-			events: {
-				created:userMadeEvents,
-				attending: userEvents
-			},
+			events: userEvents,
 			messages: {
 				userMessages,
 				numOfNewMessages

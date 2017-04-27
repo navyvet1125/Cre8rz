@@ -62,6 +62,7 @@ userSchema.pre('save',function(next){
 	if(!this.isNew && (this.isModified('career')||this.isModified('city')||this.isModified('bio')||this.isModified('name'))){
 		this.activity = new Activity();
 		// Activity needs: picture, title, body, receivers
+		this.activity.name = this.name;
 		this.activity.picture = (this.fb_avatar)? this.fb_avatar: this.google_avatar;
 		this.activity.title = '<b>'+this.name + '</b> has updated their profile.';
 		this.activity.receivers = this.followers;
