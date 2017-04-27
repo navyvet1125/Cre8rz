@@ -128,8 +128,12 @@
               </div>
               <div class="col-sm-9">
                 <div class="well">
-                  <%- newsFeed[i].title %>
-                  <p><%= newsFeed[i].created %></p>
+                  <%- newsFeed[i].title %>   <%= newsFeed[i].created %>
+                  <br>
+                  <button type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                  </button>     
+
                 </div>
               </div>
             </div>     
@@ -156,15 +160,6 @@
             <% } %>
            </div>      
           </div>
-          <hr>
-          <div class="row">
-            <h3>Bio</h3>
-            <p>
-              <%=user.bio %>
-            </p>
-          </div>
-          <hr>
-          <hr>
         </div> 
       </div>
     </div>

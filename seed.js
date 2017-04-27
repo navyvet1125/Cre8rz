@@ -56,7 +56,6 @@ User.remove({})
                 city:'Inglewood, CA',
                 career:'website' ,
                 password: truePass,
-                fb_avatar: 'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/18119218_1528654097146672_4683834936590170197_n.jpg?oh=bdfb91b42460c04f77c9764446ecb341&amp;oe=59976472',
                 bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel commodo magna. Mauris sodales turpis orci, sed luctus elit consectetur ac. Morbi maximus pellentesque augue vel pharetra. In vel ligula eu nibh vulputate eleifend eu quis sapien. Donec ac vestibulum nisl. Ut aliquet at elit et venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus metus felis, fringilla vel diam id, rutrum interdum nisi. Quisque ullamcorper, leo et egestas hend' 
             },
     		{
