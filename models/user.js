@@ -58,18 +58,20 @@ userSchema.statics.searchNameAndType = function(name, type, cb){
 	});
 };
 
-userSchema.statics.getPortfolio = function(artistID, parentID){
+userSchema.statics.getPortfolio = function(artistID, parentID, cb){
 	Portfolio.find({
 		creator: artistID,
 		parent: parentID
-	})
+	},cb)
 	.catch(function(err){
-		return parentID;t
+		return parentID||[];
 	})
 	.then(function(portfolios){
-		if(portfolios.length===0) return parentID;
+		// console.log(parentID,portfolios.length);
+		if(portfolios.length===0) return parentID||[];
 		else return portfolios.map(function(index){
-			User.getPortfolio(artistID, index._id);
+			console.log(artistID);
+			return User.getPortfolio(artistID, index._id,cb);
 		});
 	});
 };

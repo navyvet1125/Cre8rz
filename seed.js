@@ -246,8 +246,8 @@ User.remove({})
         return Activity.find({});
     })
     .then(function(activities){
-        console.log(seedUsers[0]);
         console.log('Database Seeded');
+        console.log(User.getPortfolio(seedUsers[0]._id));
     })
     .catch(function(err){
         console.log(err);
