@@ -1,5 +1,6 @@
 var mongoose 	= require('mongoose');
 var Activity	= require('./activity');
+var Portfolio 	= require('./portfolio');
 var userSchema  = new mongoose.Schema({
 	//Artist is someone who uses the website for their portfolio.
 	//Visitors are people who have accounts but do not keep their portfolios on the site
@@ -54,6 +55,22 @@ userSchema.statics.searchNameAndType = function(name, type, cb){
 			if(user.name.toLowerCase() === name.toLowerCase())person = user;
 		});
 		return cb(err, person);
+	});
+};
+
+userSchema.statics.getPortfolio = function(artistID, parentID){
+	Portfolio.find({
+		creator: artistID,
+		parent: parentID
+	})
+	.catch(function(err){
+		return parentID;t
+	})
+	.then(function(portfolios){
+		if(portfolios.length===0) return parentID;
+		else return portfolios.map(function(index){
+			User.getPortfolio(artistID, index._id);
+		});
 	});
 };
 
