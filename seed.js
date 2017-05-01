@@ -253,5 +253,5 @@ User.remove({})
         console.log(err);
     })
     .then(function(){
-        process.exit();
+        // process.exit();
     });

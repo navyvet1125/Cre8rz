@@ -62,17 +62,17 @@ userSchema.statics.getPortfolio = function(artistID, parentID, cb){
 	Portfolio.find({
 		creator: artistID,
 		parent: parentID
-	},cb)
+	}, function(err, portfolios){
+		console.log(portfolios);
+		return portfolios;
+	})
 	.catch(function(err){
 		return parentID||[];
 	})
 	.then(function(portfolios){
 		// console.log(parentID,portfolios.length);
 		if(portfolios.length===0) return parentID||[];
-		else return portfolios.map(function(index){
-			console.log(artistID);
-			return User.getPortfolio(artistID, index._id,cb);
-		});
+		else return portfolios;
 	});
 };
 
