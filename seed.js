@@ -140,6 +140,7 @@ User.remove({})
                 content:testContent,
                 parent: seedPortfolios[3],
                 likes:[seedUsers[1]._id,seedUsers[2]._id],
+                creator: seedUsers[0],
                 approved: true
             },
             {
@@ -149,6 +150,7 @@ User.remove({})
                 content: testContent,
                 parent: seedPortfolios[4],
                 likes:[seedUsers[1]._id,seedUsers[2]._id],
+                creator: seedUsers[0],
                 approved: true
             },
 

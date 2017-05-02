@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
 var Portfolio = require('./portfolio');
+var User = require('./user');
 
 var entrySchema = new mongoose.Schema({
+	creator:  {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, //Creator objectId
 	portfolio: {type: mongoose.Schema.Types.ObjectId, ref: 'Portfolio'}, //Portfolio objectId
 	title: String,												  //Title of the Entry
 	url: String,												  //Url if applicable
