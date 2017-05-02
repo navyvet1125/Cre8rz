@@ -1,6 +1,9 @@
 var mongoose 	= require('mongoose');
 var Activity	= require('./activity');
 var Portfolio 	= require('./portfolio');
+var Event		= require('./event');
+
+
 var userSchema  = new mongoose.Schema({
 	//Artist is someone who uses the website for their portfolio.
 	//Visitors are people who have accounts but do not keep their portfolios on the site
@@ -28,11 +31,14 @@ var userSchema  = new mongoose.Schema({
 	fb_access_token: String,
 	google_access_token: String,
 	// A list of followers the artist has.  An array of User Id's
-	followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+	followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate:true}],
+	//A list of all events the artist is attending.
+	attending: [{type: mongoose.Schema.Types.ObjectId, ref: 'Event', autopopulate:true}],
 	approved: {type: Boolean, default: false},  					  //If the profile is approved
 	active: {type: Boolean, default: true}  					  //If the profile is active
 });
 userSchema.plugin(require('mongoose-bcrypt'));
+userSchema.plugin(require('mongoose-autopopulate'));
 //search users by type
 userSchema.statics.findByType = function(type, cb){
 	return this.find({type: type}, cb);
