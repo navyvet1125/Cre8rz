@@ -3,8 +3,8 @@ var Portfolio = require('./portfolio');
 var User = require('./user');
 
 var entrySchema = new mongoose.Schema({
-	creator:  {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, //Creator objectId
-	portfolio: {type: mongoose.Schema.Types.ObjectId, ref: 'Portfolio'}, //Portfolio objectId
+	creator:  {type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true}, //Creator objectId
+	portfolio: {type: mongoose.Schema.Types.ObjectId, ref: 'Portfolio', autopopulate:true}, //Portfolio objectId
 	title: String,												  //Title of the Entry
 	url: String,												  //Url if applicable
 	description: String,										  //Text Description
@@ -20,6 +20,7 @@ var entrySchema = new mongoose.Schema({
 	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],  //People who like the entry
 	approved: {type: Boolean, default: true}  					  //If the entry is approved
 });
+entrySchema.plugin(require('mongoose-autopopulate'));
 
 entrySchema.statics.findByCategory = function(category, cb){
 	return this.find({category: category}, cb);

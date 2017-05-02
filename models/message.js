@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var User = require('./user');
-var materializedPlugin = require('mongoose-materialized');
+
 
 var messageSchema = new mongoose.Schema({
 	sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},		//Who sent it?
@@ -9,13 +9,17 @@ var messageSchema = new mongoose.Schema({
 	body: String,														//Content of the message
 	created: {type: Date, default: Date.now()},							//When it was made
 	read: Date,															//When it was read
-	replyTo:{type: mongoose.Schema.Types.ObjectId, ref: 'Message'},		//What this message is a reply to.
-	forwardOf:{type: mongoose.Schema.Types.ObjectId, ref: 'Message'},	//What this message is a forward of.
+	replyOrForward: {type: String, enum:[
+		'reply',
+		'forward',
+		'root'
+	], default:'root'}													//If the message is a reply, a forward, or if it is neither.
 	trashed: Date,														//If and when the message was marked as trash.
 	hidden: Date														//If and when the sender trashed the message.
 });
 
-messageSchema.plugin(materializedPlugin);
+messageSchema.plugin(require('mongoose-materialized'));
+
 
 messageSchema.statics.findBySender = function(sender, type, cb){				//Find messages by sender
 	// Note: Will default to sending only unhidden messages.

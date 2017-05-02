@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var User = require('./user');
 var Entry = require('./entry');
-var materializedPlugin = require('mongoose-materialized');
 
 var portfolioSchema = new mongoose.Schema({
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -45,7 +44,8 @@ var portfolioSchema = new mongoose.Schema({
 		'other'
 	],default:'misc'},
 });
-portfolioSchema.plugin(materializedPlugin);
+portfolioSchema.plugin(require('mongoose-autopopulate'));
+portfolioSchema.plugin(require('mongoose-materialized'));
 
 portfolioSchema.statics.findByCreator = function(creator, cb){
 	return this.find({creator:creator}, cb);

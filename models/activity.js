@@ -8,13 +8,16 @@ var activitySchema = new mongoose.Schema({
 	//the title of the activity,
 	//the body of the activity,
 	//and on whose feeds the activity will post.
+	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true}
 	created: {type: Date, default: Date.now()},
 	name: String,
 	picture: String,
 	title: String,
 	body: String,
-	receivers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+	receivers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true}]
 });
+
+activitySchema.plugin(require('mongoose-autopopulate'));
 
 var Activity = mongoose.model('Activity', activitySchema);
 
