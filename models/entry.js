@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Portfolio = require('./portfolio');
 var User = require('./user');
+var Comment = require('./comment');
 
 var entrySchema = new mongoose.Schema({
 	creator:  {type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true}, //Creator objectId
@@ -18,6 +19,7 @@ var entrySchema = new mongoose.Schema({
 	created: {type: Date, default: Date.now()},					  //When it was made
 	modified: Date,												  //When the entry was modified.
 	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],  //People who like the entry
+	comments:[{type: mongoose.Schema.Types.ObjectId, ref: 'Comment', autopopulate: true}],
 	approved: {type: Boolean, default: true}  					  //If the entry is approved
 });
 entrySchema.plugin(require('mongoose-autopopulate'));

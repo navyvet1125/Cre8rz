@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User 	 = require('./user');
+var Comment = require('./comment');
 
 var activitySchema = new mongoose.Schema({
 	//New information for the news feeds.
@@ -14,7 +15,8 @@ var activitySchema = new mongoose.Schema({
 	picture: String,
 	title: String,
 	body: String,
-	receivers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true}]
+	comments:[{type: mongoose.Schema.Types.ObjectId, ref: 'Comment', autopopulate: true}]
+	receivers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true}],
 });
 
 activitySchema.plugin(require('mongoose-autopopulate'));
