@@ -79,3 +79,25 @@ controller.logout = function(req,res){
   res.redirect('/');
 };
 module.exports = controller;
+
+
+var getPortfolio = function(artistID, parentID, cb){
+	Portfolio.find({
+		creator: artistID,
+		parent: parentID
+	}, function(err, portfolios){
+		return portfolios;
+	})
+	.catch(function(err){
+		return parentID||[];
+	})
+	.then(function(portfolios){
+		// console.log(parentID,portfolios.length);
+		if(portfolios.length===0) return parentID||[];
+		else return portfolios.map(function(index){
+			return getPortfolio(artistID,index);
+		});
+	});
+};
+
+

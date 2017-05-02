@@ -90,20 +90,35 @@ User.remove({})
                 creator: seedUsers[0]._id,
                 name: 'Evan\'s Sites',
                 description:'All of the websites I made on my own.',
-                purpose:'assessment',
+                purpose:'showcase',
                 type:'website'
             }
         ]);
     })
     .then(function(portfolios){
         seedPortfolios = portfolios;
+        return Portfolio.create([
+            {
+                creator: seedUsers[0]._id,
+                parent: seedPortfolios[0],
+                name: '2017 Sites',
+            },
+            {
+                creator: seedUsers[0]._id,
+                parent: seedPortfolios[1],
+                name: '2017 Sites',
+            },
+        ]);
+    })
+    .then(function(portfolios){
+        seedPortfolios = seedPortfolios.concat(portfolios)
         return Entry.create([
             {
                 title: 'evanwashington.com',
                 url: 'http://www.evanwashington.com',
                 description: 'Evan Washington - Holistic Health Facilitator',
                 content:testContent,
-                portfolio: seedPortfolios[1]._id,
+                portfolio: seedPortfolios[2]._id,
                 likes:[seedUsers[1]._id,seedUsers[2]._id],
                 approved: true
             },
@@ -112,7 +127,7 @@ User.remove({})
                 url: 'http://navyvet1125.github.io/Kingyo_Sukui/',
                 description: 'Get as many goldfish as you can before your scoop breaks.',
                 content: testContent,
-                portfolio: seedPortfolios[0]._id,
+                portfolio: seedPortfolios[3]._id,
                 likes:[seedUsers[1]._id,seedUsers[2]._id],
                 approved: true
             },
@@ -247,11 +262,10 @@ User.remove({})
     })
     .then(function(activities){
         console.log('Database Seeded');
-        console.log(User.getPortfolio(seedUsers[0]._id));
     })
     .catch(function(err){
         console.log(err);
     })
     .then(function(){
-        // process.exit();
+        process.exit();
     });

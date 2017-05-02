@@ -58,24 +58,6 @@ userSchema.statics.searchNameAndType = function(name, type, cb){
 	});
 };
 
-userSchema.statics.getPortfolio = function(artistID, parentID, cb){
-	Portfolio.find({
-		creator: artistID,
-		parent: parentID
-	}, function(err, portfolios){
-		console.log(portfolios);
-		return portfolios;
-	})
-	.catch(function(err){
-		return parentID||[];
-	})
-	.then(function(portfolios){
-		// console.log(parentID,portfolios.length);
-		if(portfolios.length===0) return parentID||[];
-		else return portfolios;
-	});
-};
-
 userSchema.pre('save',function(next){
 	//If there is a change to an already created user, then generate a new activity.
 	if(!this.isNew && (this.isModified('career')||this.isModified('city')||this.isModified('bio')||this.isModified('name'))){
