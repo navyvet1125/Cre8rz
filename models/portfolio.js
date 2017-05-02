@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
 var User = require('./user');
+var Entry = require('./entry');
 var materializedPlugin = require('mongoose-materialized');
 
 var portfolioSchema = new mongoose.Schema({
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	entries: [{type: mongoose.Schema.Types.ObjectId, ref: 'Entry'}],
 	name: {type:String, default:'No Name'},
 	description: String,
 	//If portfolio is a sub-directory.

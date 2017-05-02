@@ -2,9 +2,10 @@ var mongoose = require('mongoose');
 var User = require('./user');
 var materializedPlugin = require('mongoose-materialized');
 
+
 var commentSchema = new mongoose.Schema({
 	// A model for comments.  
-	subject:{type: mongoose.Schema.Types.ObjectId, required: true},					//what is being commented on
+	subject: {type: mongoose.Schema.Types.ObjectId, required: true},				//what is being commented on
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},	//Who created the comment.
 	created: {type: Date, default: Date.now()},										//When the comment was created.
 	modified: Date,																	//When the comment was modified.
@@ -14,6 +15,7 @@ var commentSchema = new mongoose.Schema({
 });
 
 commentSchema.plugin(materializedPlugin);
+
 commentSchema.statics.findByCreator = function(creator, cb){
 	return this.find({creator: creator}, cb);
 };

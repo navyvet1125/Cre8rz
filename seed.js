@@ -288,6 +288,7 @@ User.remove({})
         console.log(err);
     })
     .then(function(results){
-        console.log(results);
+        // console.log(results);
+        console.log(results[0].children[0].children);
         process.exit();
     });
