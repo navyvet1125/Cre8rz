@@ -71,31 +71,31 @@
             </div>
             <div class="well">
               <p><a href="#">Portfolios</a></p>
-              <p>
-                
+              <div class ="row well">
+              <% portfolios[0].children.forEach(function(index){ %>
+                <div class="col-sm-6">
+                  <span class="label label-primary"><%= index.name %></span>
+                  <% if(index.children) {%> 
+                    <% index.children.forEach(function(childIndex){ %>
+                      <span class="label label-success"><%= childIndex.name %></span>
+                    <% }) %>
+                  <% }%>
+                </div>
+              <% }) %>
 
-                <span class="label label-default">News</span>
-                <span class="label label-primary">W3Schools</span>
-                <span class="label label-success">Labels</span>
-                <span class="label label-info">Football</span>
-                <span class="label label-warning">Gaming</span>
-                <span class="label label-danger">Friends</span>
-              </p>
+              </div>
             </div>
-            <div class="well">
-              <h3>Messages</h3>
-              <% if(messages.numOfNewMessages) { %>
-                <p>
-                  New Messages: <a href="/messages"><%= messages.numOfNewMessages %></a>
-                </p>
-              <% } %>
-            </div>
-
-            <div class="alert alert-success fade in">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-              <p><strong>Ey!</strong></p>
-              People are looking at your profile. Find out who.
-            </div>
+            <% if(messages.numOfNewMessages) { %>
+              <div class="alert alert-success fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                <p><strong>New Messages</strong></p>
+                <% if(messages.numOfNewMessages ===1 ){ %>
+                  You have a new message!
+                <%} else {%>
+                  You have <%= messages.numOfNewMessages %> new messages!
+                <% } %>
+              </div>
+            <% } %>
             <p><a href="#">Link</a></p>
             <p><a href="#">Link</a></p>
             <p><a href="#">Link</a></p>
@@ -118,29 +118,27 @@
           </div>
           <% for(var i = 0; i < newsFeed.length; i++){ %>
             <div class="row">
-              <div class="col-sm-3">
+              <div class="col-sm-12">
                 <div class="well">
-                <% if(newsFeed[i].picture) { %>
-                  <img src="<%= newsFeed[i].picture %>" class="img-circle" height="55" width="55" alt="<%= newsFeed[i].name %>">
-                <% } else { %>
-                 <img src="/images/no-image.png" class="img-circle" height="55" width="55" alt="<%= newsFeed[i].name %>">
-                <% } %>
-                 <p><%= newsFeed[i].name %></p>
-                </div>
-              </div>
-              <div class="col-sm-9">
-                <div class="well">
-                  <%- newsFeed[i].title %>   <%= newsFeed[i].created %>
+                 <p class="text-left">
+                  <% if(newsFeed[i].picture) { %>
+                    <img src="<%= newsFeed[i].picture %>" class="img-circle" height="55" width="55" alt="<%= newsFeed[i].name %>">
+                  <% } else { %>
+                   <img src="/images/no-image.png" class="img-circle" height="55" width="55" alt="<%= newsFeed[i].name %>">
+                  <% } %>
+                  <%- newsFeed[i].title %>
+                  <%= newsFeed[i].created %>
+                 </p>
+                 <p class= "text-left">
                   <br>
                   <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                    <span class="glyphicon glyphicon-thumbs-up "></span> Like
                   </button>     
-
+                </p>
                 </div>
               </div>
             </div>     
           <% } %>
-          <p><%= portfolios %></p>
         </div>
         <div class="col-md-2">
           <div class="row">

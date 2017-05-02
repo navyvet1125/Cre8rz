@@ -13,7 +13,7 @@ var messageSchema = new mongoose.Schema({
 		'reply',
 		'forward',
 		'root'
-	], default:'root'}													//If the message is a reply, a forward, or if it is neither.
+	], default:'root'},													//If the message is a reply, a forward, or if it is neither.
 	trashed: Date,														//If and when the message was marked as trash.
 	hidden: Date														//If and when the sender trashed the message.
 });

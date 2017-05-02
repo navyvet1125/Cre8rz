@@ -25,7 +25,10 @@ controller.dashboard = function(req, res, next) {
 	var userActivities =[];
 	var userId = req.user.id;
 
-	Portfolio.find({creator: userId})
+	Portfolio.findOne({creator: userId, path:''})
+	.then(function(portfolio){
+		return portfolio.getArrayTree();
+	})
 	.then(function(portfolios){
 		userPortfolios = portfolios;
 		return Endorsememt.find({subject: userId});

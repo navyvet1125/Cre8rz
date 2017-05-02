@@ -4,7 +4,7 @@ var Comment = require('./comment');
 
 var eventSchema = new mongoose.Schema({
 	//The purpose of this model is to enable artists to promote themselves using the site
-	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, //Creator objectId
+	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true}, //Creator objectId
 	title: String,												  //Title of the Event
 	description: String,										  //Text Description
 	when: {type: Date, required: true},							  //Date and time of the event

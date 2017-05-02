@@ -286,11 +286,15 @@ User.remove({})
         console.log('Database Seeded');
         return seedPortfolios[0].getArrayTree();
     })
+    .then(function(results){
+        console.log(results);
+        return Event.find({});
+        
+    })
     .catch(function(err){
         console.log(err);
     })
     .then(function(results){
-        // console.log(results);
-        console.log(results[0].children[0].children);
-        process.exit();
+        console.log(results);
+            process.exit();
     });
