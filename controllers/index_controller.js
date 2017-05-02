@@ -17,6 +17,7 @@ controller.dashboard = function(req, res, next) {
 	var userPortfolios = [];
 	var userEndorsements = [];
 	var userEvents = [];
+	var userEntries = [];
 	var userMadeEvents = [];
 	var userMessages =[];
 	var numOfNewMessages = 0;
@@ -26,7 +27,7 @@ controller.dashboard = function(req, res, next) {
 
 	Portfolio.find({creator: userId})
 	.then(function(portfolios){
-		if(portfolios)userPortfolios = portfolios;
+		userPortfolios = portfolios;
 		return Endorsememt.find({subject: userId});
 	})
 	.then(function(endorsements){
@@ -43,6 +44,10 @@ controller.dashboard = function(req, res, next) {
 	})
 	.then(function(messages){
 		if(messages)numOfNewMessages = messages.length;
+		return Entry.find({creator: userId});
+	})
+	.then(function(entries){
+		userEntries = entries;
 		return User.find({followers: {$in: [userId]}});
 	})
 	.then(function(users){
@@ -81,23 +86,13 @@ controller.logout = function(req,res){
 module.exports = controller;
 
 
-var getPortfolio = function(artistID, parentID, cb){
-	Portfolio.find({
-		creator: artistID,
-		parent: parentID
-	}, function(err, portfolios){
-		return portfolios;
-	})
-	.catch(function(err){
-		return parentID||[];
-	})
-	.then(function(portfolios){
-		// console.log(parentID,portfolios.length);
-		if(portfolios.length===0) return parentID||[];
-		else return portfolios.map(function(index){
-			return getPortfolio(artistID,index);
-		});
-	});
+function getPortfolio(portfolios, parentID){
+	for (var i =0; i<portfolios.length;i++){
+		if(portfolios[i]._id===parentID) return portfolios[i];
+	}
 };
 
 
+function getKeyByValue(object, value){ 
+	return Object.keys(object).find(key => object[key] === value);
+};

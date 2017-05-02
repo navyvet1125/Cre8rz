@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
 var User = require('./user');
+var materializedPlugin = require('mongoose-materialized');
 
 var portfolioSchema = new mongoose.Schema({
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	name: {type:String, default:'No Name'},
 	description: String,
 	//If portfolio is a sub-directory.
-	parent: {type: mongoose.Schema.Types.ObjectId, ref: 'Portfolio'},
 	created: {type:Date, default: Date.now()},
 	modified: Date,
 	//Purpose of the portfolios.  Showcase is the default setting.
@@ -43,6 +43,7 @@ var portfolioSchema = new mongoose.Schema({
 		'other'
 	],default:'misc'},
 });
+portfolioSchema.plugin(materializedPlugin);
 
 portfolioSchema.statics.findByCreator = function(creator, cb){
 	return this.find({creator:creator}, cb);

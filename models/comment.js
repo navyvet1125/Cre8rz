@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User = require('./user');
+var materializedPlugin = require('mongoose-materialized');
 
 var commentSchema = new mongoose.Schema({
 	// A model for comments.  
@@ -12,6 +13,7 @@ var commentSchema = new mongoose.Schema({
 	isReply: {type: Boolean, default: false}										//Is this comment a reply to an earlier comment?
 });
 
+commentSchema.plugin(materializedPlugin);
 commentSchema.statics.findByCreator = function(creator, cb){
 	return this.find({creator: creator}, cb);
 };

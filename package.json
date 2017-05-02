@@ -17,6 +17,7 @@
     "express": "~4.15.2",
     "express-session": "^1.15.2",
     "mongoose-bcrypt": "^1.4.2",
+    "mongoose-materialized": "^0.1.9",
     "morgan": "~1.8.1",
     "nodemailer": "^4.0.1",
     "passport": "^0.3.2",

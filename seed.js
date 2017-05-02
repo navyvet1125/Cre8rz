@@ -81,16 +81,9 @@ User.remove({})
         return Portfolio.create([
             {
                 creator: seedUsers[0]._id,
-                name: 'Evan\'s Projects',
-                description:'All of the projects I made for class',
-                purpose:'assessment',
-                type:'website'
-            },
-            {
-                creator: seedUsers[0]._id,
-                name: 'Evan\'s Sites',
-                description:'All of the websites I made on my own.',
-                purpose:'showcase',
+                name: 'Evan\'s Portfolio',
+                description:'All of the work I\'ve done so far.',
+                purpose:'hybrid',
                 type:'website'
             }
         ]);
@@ -100,13 +93,40 @@ User.remove({})
         return Portfolio.create([
             {
                 creator: seedUsers[0]._id,
+                name: 'Evan\'s Projects',
+                description:'All of the projects I made for class',
+                purpose:'assessment',
                 parent: seedPortfolios[0],
-                name: '2017 Sites',
+                parentId: seedPortfolios[0]._id,
+                type:'website'
             },
             {
                 creator: seedUsers[0]._id,
+                name: 'Evan\'s Sites',
+                description:'All of the websites I made on my own.',
+                purpose:'showcase',
+                parent: seedPortfolios[0],
+                parentId: seedPortfolios[0]._id,
+                type:'website'
+            }
+        ]);
+    })
+    .then(function(portfolios){
+        seedPortfolios = seedPortfolios.concat(portfolios)
+        return Portfolio.create([
+            {
+                creator: seedUsers[0]._id,
                 parent: seedPortfolios[1],
+                parentId: seedPortfolios[1]._id,
                 name: '2017 Sites',
+                description:'The sites I created in 2017.'
+            },
+            {
+                creator: seedUsers[0]._id,
+                parent: seedPortfolios[2],
+                parentId: seedPortfolios[2]._id,
+                name: '2017 Sites',
+                description:'The sites I created in 2017.'
             },
         ]);
     })
@@ -118,7 +138,7 @@ User.remove({})
                 url: 'http://www.evanwashington.com',
                 description: 'Evan Washington - Holistic Health Facilitator',
                 content:testContent,
-                portfolio: seedPortfolios[2]._id,
+                parent: seedPortfolios[3],
                 likes:[seedUsers[1]._id,seedUsers[2]._id],
                 approved: true
             },
@@ -127,7 +147,7 @@ User.remove({})
                 url: 'http://navyvet1125.github.io/Kingyo_Sukui/',
                 description: 'Get as many goldfish as you can before your scoop breaks.',
                 content: testContent,
-                portfolio: seedPortfolios[3]._id,
+                parent: seedPortfolios[4],
                 likes:[seedUsers[1]._id,seedUsers[2]._id],
                 approved: true
             },
@@ -262,10 +282,12 @@ User.remove({})
     })
     .then(function(activities){
         console.log('Database Seeded');
+        return seedPortfolios[0].getArrayTree();
     })
     .catch(function(err){
         console.log(err);
     })
-    .then(function(){
+    .then(function(results){
+        console.log(results);
         process.exit();
     });

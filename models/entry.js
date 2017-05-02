@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Portfolio = require('./portfolio');
+var materializedPlugin = require('mongoose-materialized');
 
 var entrySchema = new mongoose.Schema({
 	portfolio: {type: mongoose.Schema.Types.ObjectId, ref: 'Portfolio'}, //Portfolio objectId
@@ -18,6 +19,7 @@ var entrySchema = new mongoose.Schema({
 	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],  //People who like the entry
 	approved: {type: Boolean, default: true}  					  //If the entry is approved
 });
+entrySchema.plugin(materializedPlugin);
 
 entrySchema.statics.findByCategory = function(category, cb){
 	return this.find({category: category}, cb);

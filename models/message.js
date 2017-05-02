@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User = require('./user');
+var materializedPlugin = require('mongoose-materialized');
 
 var messageSchema = new mongoose.Schema({
 	sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},		//Who sent it?
@@ -13,6 +14,8 @@ var messageSchema = new mongoose.Schema({
 	trashed: Date,														//If and when the message was marked as trash.
 	hidden: Date														//If and when the sender trashed the message.
 });
+
+messageSchema.plugin(materializedPlugin);
 
 messageSchema.statics.findBySender = function(sender, type, cb){				//Find messages by sender
 	// Note: Will default to sending only unhidden messages.
