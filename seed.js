@@ -12,20 +12,20 @@ var seedUsers;
 var seedPortfolios;
 var seedEntries;
 var seedEvents;
-var testContent= JSON.stringify([
+var testContent= [
     {
-        src:'picture url 1',
-        desc:'first pic'
+        src:'/images/kingyo.png',
+        desc:'Kingyo Sukui'
     },
     {
-        src:'picture url 2',
-        desc:'second pic'
+        src:'/images/zodiac.png',
+        desc:'Zodiac Love'
     },
     {
-        src:'picture url 3',
-        desc:'third pic'
+        src:'/images/prayer.png',
+        desc:'Prayer Hub'
     }
-]);
+];
 //Clear database and reseed it with new information.
 User.remove({})
     .then(function(){
@@ -160,6 +160,14 @@ User.remove({})
         seedEntries = entries;
         seedUsers[0].followers = entries[0].likes;
         return seedUsers[0].save();
+    })
+    .then(function(){
+        seedPortfolios[3].entries.push(seedEntries[0]);
+        return seedPortfolios[3].save();
+    })
+    .then(function(){
+        seedPortfolios[4].entries.push(seedEntries[1]);
+        return seedPortfolios[4].save();
     })
     .then(function(){
         seedUsers[0].name = 'Evan J. Washington';

@@ -19,9 +19,11 @@ var userSchema  = new mongoose.Schema({
 	name: {type: String, required:true},
 	bio: String,														// Information about the artist
 	city: String,
+	//User status
+	status: String,
 	password: String,
 	//User Immutable
-	login: {type: String, unique: true},
+	login: {type: String, unique: true, required: true},
 	fb_avatar: String,
 	google_avatar: String,
 	email: {type: String, unique:true, required: true},

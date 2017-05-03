@@ -12,6 +12,26 @@ controller.index = function(req, res, next) {
   res.render('index', { title: 'PortHole' });
 };
 
+controller.profile = function(req,res,next){
+	var username = req.params.login;
+	var currentUser;
+	User.findOne({login: username})
+	.then(function(user){
+		currentUser = user;
+		return Portfolio.findOne({path:''}).then(function(portfolio){return portfolio.getArrayTree();})
+	})
+	.then(function(portfolios){
+		if(currentUser)res.render('profile',{title: 'PortHole', user: currentUser, portfolios:portfolios });
+		//error handling
+		else res.status(404).render('error',{status: 404, message:'User not found!'});
+	})
+	.catch(function(err){
+		//error handling
+		res.status(500).render('error',{message:err});
+	});
+};
+
+
 //Renders main content page.
 controller.dashboard = function(req, res, next) {
 	var userPortfolios = [];
@@ -87,15 +107,3 @@ controller.logout = function(req,res){
   res.redirect('/');
 };
 module.exports = controller;
-
-
-function getPortfolio(portfolios, parentID){
-	for (var i =0; i<portfolios.length;i++){
-		if(portfolios[i]._id===parentID) return portfolios[i];
-	}
-};
-
-
-function getKeyByValue(object, value){ 
-	return Object.keys(object).find(key => object[key] === value);
-};

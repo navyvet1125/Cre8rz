@@ -16,4 +16,7 @@ router.route('/dashboard')
 router.route('/logout')
 	.get(indexController.logout);
 
+router.route('/:login')
+	.get(indexController.profile);
+
 module.exports = router;

@@ -1,0 +1,56 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="#">PortHole</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <% if(typeof user !=='undefined') { %> 
+            <li><a href="/dashboard">Home</a></li>
+            <li><a href="#">Messages</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Search</a></li>
+            <li><a href="/logout">Log Out</a></li>
+          <% } %>
+        </ul>
+
+<!--         <form class="navbar-form navbar-right" role="search">
+          <div class="form-group input-group">
+            <input type="text" class="form-control" placeholder="Search..">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">
+                <span class="glyphicon glyphicon-search"></span>
+              </button>
+            </span>        
+          </div>
+        </form>
+ -->        <% if(typeof user ==='undefined') { %> 
+        <form class="navbar-form navbar-right" action="/auth/local" method="post">
+          <div class="form-group input-group">
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email">
+          </div>
+          <div class="form-group input-group">
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+          </div>  
+          <div class="form-group input-group">
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-success">Submit</button>
+            </span>
+          </div>
+        </form>      
+        <% } %>
+
+        <% if(typeof user !=='undefined') { %> 
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+          </ul>
+        <% } %>
+      </div>
+    </div>
+  </nav>

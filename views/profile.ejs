@@ -6,12 +6,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   </head>
   <body>
+  <%- include('partials/header.ejs' ) %>
+  
     <div class = "container">
       <div class = "row">
         <h1> <a href="/"><%= title %></a></h1>
         <h3>A place for artists to be seen</h3>
       </div>
       <div class="row">
+        <%- include('partials/image.ejs') %>
         <h2> <%= user.name %></h2>
       </div>
       <div class="row">
@@ -22,6 +25,50 @@
         <% } %>
         <p> Followers: <%= user.followers.length%></p>
         <p> Bio: <textarea class="form-control" rows= 10 readonly="true"><%= user.bio%></textarea> </p>
+      </div>
+      <h3><%= portfolios[0].name %></h3>
+      <div class = "row">
+        <% portfolios[0].children.forEach(function(index){ %> 
+
+          <!-- If there are any children, check if they have entries -->
+          <% if(index.children){ %> 
+            <div class="col-md-6">
+            <h4><%= index.name %></h4>
+              <% index.children.forEach(function(firstDepth){ %>
+                <p><%= firstDepth.name %></p>
+                <% if(firstDepth.entries) { %>
+                  <div class="well" >
+                    <% firstDepth.entries.forEach(function(secondEntries){ %>
+                    <p><%= secondEntries.title %></p>
+                    <p><%= secondEntries.category %></p>
+                    <p><%= secondEntries.description %></p>
+                    <div>
+                      <% secondEntries.content.forEach(function(content){ %>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <img src="<%- content.src %>" alt="<%- content.desc %>" />
+                            <p><%= content.desc %></p>
+                          </div>
+                        </div>
+                      <% }) %>
+                    </div>
+                    <% }) %>
+                  </div>
+                <% } %>
+              <% }) %>
+            </div>
+          <% } %>
+
+          <!-- If there were any pictures in the first level -->
+          <% if(index.entries) { %>
+            <% index.entries.forEach(function(firstEntries){ %>
+            <p><%= firstEntries %></p>
+            <% }) %>
+          <% } %>
+          
+
+
+        <% }) %>
       </div>
       <footer>
         <a href="/users">Back to users</a>

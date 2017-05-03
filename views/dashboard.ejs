@@ -17,55 +17,14 @@
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>                        
-        </button>
-        <a class="navbar-brand" href="#">PortHole</a>
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Messages</a></li>
-          <li><a href="#">Portfolios</a></li>
-          <li><a href="#">Events</a></li>
-          <li><a href="#">Search</a></li>
-          <li><a href="/logout">Log Out</a></li>
-        </ul>
-        <form class="navbar-form navbar-right" role="search">
-          <div class="form-group input-group">
-            <input type="text" class="form-control" placeholder="Search..">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button">
-                <span class="glyphicon glyphicon-search"></span>
-              </button>
-            </span>        
-          </div>
-        </form>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <%- include('partials/header.ejs' ) %>
 
-  
     <div class="container text-center">    
         <div class="row">
-          <div class="col-sm-3 well">
+          <div class="col-md-3 well">
             <div class="well">
-              <p><a href="#">My Profile</a></p>
-              <% if(user.fb_avatar){ %>
-                <img src="<%= user.fb_avatar%>" class="img-circle" width="50%"  alt="<%= user.name %>"/>
-              <% } else if (user.google_avatar) { %>
-                <img src="<%= user.google_avatar%>" class="img-circle" width="50%"  alt="<%= user.name %>"/>
-              <% } else { %>
-                <p>No Picture!</p>
-              <% } %>
+              <p><a href="<%= user.login %>">My Profile</a></p>
+              <%- include('partials/image.ejs') %>
               <h3>Location</h3>
               <h4><%= user.city %></h4>
             </div>
@@ -73,7 +32,7 @@
               <p><a href="#">Portfolios</a></p>
               <div class ="row well">
               <% portfolios[0].children.forEach(function(index){ %>
-                <div class="col-sm-6">
+                <div class="col-lg-6">
                   <span class="label label-primary"><%= index.name %></span>
                   <% if(index.children) {%> 
                     <% index.children.forEach(function(childIndex){ %>
@@ -96,50 +55,10 @@
                 <% } %>
               </div>
             <% } %>
-            <p><a href="#">Link</a></p>
-            <p><a href="#">Link</a></p>
-            <p><a href="#">Link</a></p>
           </div>
-           <div class="col-md-7">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="panel panel-default text-left">
-                  <div class="panel-body">
-                    <p contenteditable="true">Status: Feeling Fine</p>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <span class="glyphicon glyphicon-thumbs-up"></span> Like
-                    </button>     
-                  </div>
-                </div>
-              </div>
-            </div>        
-          <div class="row">
-            <h2>News Feed</h2>              
+          <div class="col-md-7">
+            <%- include('partials/feed.ejs' ) %>
           </div>
-          <% for(var i = 0; i < newsFeed.length; i++){ %>
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="well">
-                 <p class="text-left">
-                  <% if(newsFeed[i].picture) { %>
-                    <img src="<%= newsFeed[i].picture %>" class="img-circle" height="55" width="55" alt="<%= newsFeed[i].name %>">
-                  <% } else { %>
-                   <img src="/images/no-image.png" class="img-circle" height="55" width="55" alt="<%= newsFeed[i].name %>">
-                  <% } %>
-                  <%- newsFeed[i].title %>
-                  <%= newsFeed[i].created %>
-                 </p>
-                 <p class= "text-left">
-                  <br>
-                  <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-up "></span> Like
-                  </button>     
-                </p>
-                </div>
-              </div>
-            </div>     
-          <% } %>
-        </div>
         <div class="col-md-2">
           <div class="row">
             <div class="thumbnail">

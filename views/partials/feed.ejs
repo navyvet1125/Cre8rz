@@ -1,0 +1,39 @@
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default text-left">
+        <div class="panel-body">
+          <p contenteditable="true">Status: Feeling Fine</p>
+          <button type="button" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-thumbs-up"></span> Like
+          </button>     
+        </div>
+      </div>
+    </div>
+  </div>        
+<div class="row">
+  <h2>News Feed</h2>              
+</div>
+<% for(var i = 0; i < newsFeed.length; i++){ %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="well">
+       <p class="text-left">
+        <% if(newsFeed[i].picture) { %>
+          <img src="<%= newsFeed[i].picture %>" class="img-circle" height="55" width="55" alt="<%= newsFeed[i].name %>">
+        <% } else { %>
+         <img src="/images/no-image.png" class="img-circle" height="55" width="55" alt="<%= newsFeed[i].name %>">
+        <% } %>
+        <%- newsFeed[i].title %>
+        <%= newsFeed[i].created %>
+       </p>
+       <p class= "text-left">
+        <br>
+        <button type="button" class="btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-thumbs-up "></span> Like
+        </button>     
+      </p>
+      </div>
+    </div>
+  </div>     
+<% } %>

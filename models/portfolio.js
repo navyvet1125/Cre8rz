@@ -4,7 +4,7 @@ var Entry = require('./entry');
 
 var portfolioSchema = new mongoose.Schema({
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-	entries: [{type: mongoose.Schema.Types.ObjectId, ref: 'Entry'}],
+	entries: [{type: mongoose.Schema.Types.ObjectId, ref: 'Entry',autopopulate:true}],
 	name: {type:String, default:'No Name'},
 	description: String,
 	//If portfolio is a sub-directory.
