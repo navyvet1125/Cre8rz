@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %> - <%= user.name %></title>
+    <title><%= title %> - <%= profile.name %></title>
     <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   </head>
@@ -14,18 +14,27 @@
         <h3>A place for artists to be seen</h3>
       </div>
       <div class="row">
-        <%- include('partials/image.ejs') %>
-        <h2> <%= user.name %></h2>
+
+        <% if(profile.fb_avatar){ %>
+          <img src="<%= profile.fb_avatar%>" class="img-circle" width="50%"  alt="<%= profile.name %>"/>
+        <% } else if (profile.google_avatar) { %>
+          <img src="<%= profile.google_avatar%>" class="img-circle" width="50%"  alt="<%= profile.name %>"/>
+        <% } else { %>
+          <p>No Picture!</p>
+        <% } %>
+
+        <h2> <%= profile.name %></h2>
       </div>
       <div class="row">
-        <p> Location: <%= user.city %> </p>
-        <p> <%= user.type %> </p>
-        <% if(user.career !='other') { %>
-          <p> Career: <%= user.career %> </p>
+        <p> Location: <%= profile.city %> </p>
+        <p> <%= profile.type %> </p>
+        <% if(profile.career !='other') { %>
+          <p> Career: <%= profile.career %> </p>
         <% } %>
-        <p> Followers: <%= user.followers.length%></p>
-        <p> Bio: <textarea class="form-control" rows= 10 readonly="true"><%= user.bio%></textarea> </p>
+        <p> Followers: <%= profile.followers.length%></p>
+        <p> Bio: <textarea class="form-control" rows= 10 readonly="true"><%= profile.bio%></textarea> </p>
       </div>
+      <% if(portfolios.length){ %>
       <h3><%= portfolios[0].name %></h3>
       <div class = "row">
         <% portfolios[0].children.forEach(function(index){ %> 
@@ -65,10 +74,8 @@
             <p><%= firstEntries %></p>
             <% }) %>
           <% } %>
-          
-
-
         <% }) %>
+      <% } %>
       </div>
       <footer>
         <a href="/users">Back to users</a>

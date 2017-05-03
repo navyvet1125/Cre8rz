@@ -18,10 +18,15 @@ controller.profile = function(req,res,next){
 	User.findOne({login: username})
 	.then(function(user){
 		currentUser = user;
-		return Portfolio.findOne({path:''}).then(function(portfolio){return portfolio.getArrayTree();})
+		return Portfolio.findOne({creator: user, path:''})
+		.then(function(portfolio){
+			if(portfolio) return portfolio.getArrayTree();
+			else return [];
+		})
 	})
 	.then(function(portfolios){
-		if(currentUser)res.render('profile',{title: 'PortHole', user: currentUser, portfolios:portfolios });
+		console.log(portfolios);
+		if(currentUser)res.render('profile',{title: 'PortHole', profile: currentUser, portfolios:portfolios });
 		//error handling
 		else res.status(404).render('error',{status: 404, message:'User not found!'});
 	})
