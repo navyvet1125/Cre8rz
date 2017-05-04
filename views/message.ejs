@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  	<header>
+    	<%- include('partials/header.ejs' ) %>
+  	</header>
+  	<article class="container">
+  		<section>
+  			<div class="row">
+  				<h1>Messages</h1>
+  				<hr>
+  				<div class="row">
+  					<div class="col-md-12">
+  						<table class="table table-striped table-bordered">
+  							<thead>
+  								<th>Sender</th>
+  								<th>Subject</th>
+  								<th>Sent</th>
+  							</thead>
+	  						<% messages.forEach(function(message){ %>
+  								<tr>
+			  						<td><%= message.sender.name %></td>
+			  						<td>
+			  							<% if(!message.read) { %>
+			  								<b><%= message.subject %></b>
+			  							<% } else { %>
+			  								<%= message.subject %>
+			  							<% } %>
+			  						</td>
+			  						<td><%= message.created %></td>
+  								</tr>
+	  						<% }) %>
+  						</table>
+  					</div>
+  				</div>
+  			</div>
+  		</section>
+  	</article>
+
+  </body>
+ </html>

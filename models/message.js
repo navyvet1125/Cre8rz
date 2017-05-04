@@ -3,7 +3,7 @@ var User = require('./user');
 
 
 var messageSchema = new mongoose.Schema({
-	sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},		//Who sent it?
+	sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate:true},		//Who sent it?
 	receiver: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},		//Who is it for?
 	subject: {type: String, default: 'No Subject'},						//subject
 	body: String,														//Content of the message
@@ -18,6 +18,7 @@ var messageSchema = new mongoose.Schema({
 	hidden: Date														//If and when the sender trashed the message.
 });
 
+messageSchema.plugin(require('mongoose-autopopulate'));
 messageSchema.plugin(require('mongoose-materialized'));
 
 

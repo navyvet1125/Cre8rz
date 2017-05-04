@@ -9,33 +9,31 @@
   <%- include('partials/header.ejs' ) %>
   
     <div class = "container">
-      <div class = "row">
-        <h1> <a href="/dashboard"><%= title %></a></h1>
-        <h3>A place for artists to be seen</h3>
-      </div>
+      <h2> <%= profile.name %></h2>
       <div class="row">
+        <div class="col-md-6">
+          <% if(profile.fb_avatar){ %>
+            <img src="<%= profile.fb_avatar%>" class="img-circle" width="100px"  alt="<%= profile.name %>"/>
+          <% } else if (profile.google_avatar) { %>
+            <img src="<%= profile.google_avatar%>" class="img-circle" width="100px"  alt="<%= profile.name %>"/>
+          <% } else { %>
+            <p>No Picture!</p>
+          <% } %>
 
-        <% if(profile.fb_avatar){ %>
-          <img src="<%= profile.fb_avatar%>" class="img-circle" width="50%"  alt="<%= profile.name %>"/>
-        <% } else if (profile.google_avatar) { %>
-          <img src="<%= profile.google_avatar%>" class="img-circle" width="50%"  alt="<%= profile.name %>"/>
-        <% } else { %>
-          <p>No Picture!</p>
-        <% } %>
-
-        <h2> <%= profile.name %></h2>
+        </div>
+        <div class="col-md-6">
+          <p> Location: <%= profile.city %> </p>
+          <p> <%= profile.type %> </p>
+          <% if(profile.career !='other') { %>
+            <p> Career: <%= profile.career %> </p>
+          <% } %>
+          <p> Followers: <%= profile.followers.length%></p>
+        </div>
       </div>
-      <div class="row">
-        <p> Location: <%= profile.city %> </p>
-        <p> <%= profile.type %> </p>
-        <% if(profile.career !='other') { %>
-          <p> Career: <%= profile.career %> </p>
-        <% } %>
-        <p> Followers: <%= profile.followers.length%></p>
-        <p> Bio: <textarea class="form-control" rows= 10 readonly="true"><%= profile.bio%></textarea> </p>
-      </div>
+      <p> Bio: <textarea class="form-control" rows= 10 readonly="true"><%= profile.bio%></textarea> </p>
       <% if(portfolios.length){ %>
       <h3><%= portfolios[0].name %></h3>
+      <hr>
       <div class = "row">
         <% portfolios[0].children.forEach(function(index){ %> 
 

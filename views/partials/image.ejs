@@ -1,7 +1,7 @@
 <% if(user.fb_avatar){ %>
-	<img src="<%= user.fb_avatar%>" class="img-circle" width="50%"  alt="<%= user.name %>"/>
+	<img src="<%= user.fb_avatar%>" class="img-circle" width="100px"  alt="<%= user.name %>"/>
 <% } else if (user.google_avatar) { %>
-	<img src="<%= user.google_avatar%>" class="img-circle" width="50%"  alt="<%= user.name %>"/>
+	<img src="<%= user.google_avatar%>" class="img-circle" width="100px"  alt="<%= user.name %>"/>
 <% } else { %>
 	<p>No Picture!</p>
 <% } %>

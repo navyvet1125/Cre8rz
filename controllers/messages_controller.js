@@ -7,7 +7,7 @@ controller.index = function(req, res) {
 	Message.findByReceiver(req.user._id)
 		.then(function(messages){
 			//if it worked
-			res.status(200).send(messages);
+			res.status(200).render('message',{title: 'PortHole - Messages', messages: messages, user: req.user});
 		})
 		.catch(function(err){
 			//if it didn't

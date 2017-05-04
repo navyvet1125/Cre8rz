@@ -25,7 +25,6 @@ controller.profile = function(req,res,next){
 		})
 	})
 	.then(function(portfolios){
-		console.log(portfolios);
 		if(currentUser)res.render('profile',{title: 'PortHole', profile: currentUser, portfolios:portfolios });
 		//error handling
 		else res.status(404).render('error',{status: 404, message:'User not found!'});
