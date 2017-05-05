@@ -6,41 +6,39 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-  	<header>
-    	<%- include('partials/header.ejs' ) %>
-  	</header>
-  	<article class="container">
-  		<section>
-  			<div class="row">
-  				<h1>Messages</h1>
-  				<hr>
-  				<div class="row">
-  					<div class="col-md-12">
-  						<table class="table table-striped table-bordered">
-  							<thead>
-  								<th>Sender</th>
-  								<th>Subject</th>
-  								<th>Sent</th>
-  							</thead>
-	  						<% messages.forEach(function(message){ %>
-  								<tr>
-			  						<td><%= message.sender.name %></td>
-			  						<td>
-			  							<% if(!message.read) { %>
-			  								<b><%= message.subject %></b>
-			  							<% } else { %>
-			  								<%= message.subject %>
-			  							<% } %>
-			  						</td>
-			  						<td><%= message.created %></td>
-  								</tr>
-	  						<% }) %>
-  						</table>
-  					</div>
-  				</div>
-  			</div>
-  		</section>
-  	</article>
-
+    <%- include('partials/header.ejs' ) %>
+    <article class="container">
+    	<section class="row">
+    		<div class="col-md-6">
+    			<h3><%= message.subject %></h3>
+    		</div>
+    		<div class="col-md-6 text-right">
+    			<ul class="list-inline">
+    				<li><span class="glyphicon glyphicon-share-alt icon-flipped"></span>reply</li>
+    				<li><span class="glyphicon glyphicon-share-alt"></span>forward</li>
+    				<li><span class="glyphicon glyphicon-trash"></span>trash</li>
+    				<li><span class="glyphicon glyphicon-comment"></span>report</li>
+    				
+    			</ul>
+    		</div>
+    	</section>
+    	<hr>
+    	<section class="row">
+    		<div>
+    			<% if(message.sender.fb_avatar){ %>
+    				<img src="<%= message.sender.fb_avatar%>" class="img-circle" width="100px"  alt="<%= message.sender.name %>"/>
+    			<% } else if (message.sender.google_avatar) { %>
+    				<img src="<%= message.sender.google_avatar%>" class="img-circle" width="100px"  alt="<%= message.sender.name %>"/>
+    			<% } else { %>
+    				<span>No Picture!</span>
+    			<% } %>  
+	   			<b><%= message.sender.name %></b>
+  				<%= message.sender.login %>
+    		</div>
+    		<div class="row">
+    			<textarea class="form-control" rows= 10 readonly="true"><%= message.body %></textarea>
+    		</div>
+    	</section>
+    </article>
   </body>
- </html>
+</html>
