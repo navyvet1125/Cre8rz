@@ -13,3 +13,12 @@
 .list-inline li {
 	font-size: 2em;
 }
+
+textarea {
+  outline: none;
+  overflow: auto;
+}
+
+.form-group .viewBox {
+  background-color: white;
+}

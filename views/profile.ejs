@@ -30,7 +30,9 @@
           <p> Followers: <%= profile.followers.length%></p>
         </div>
       </div>
-      <p> Bio: <textarea class="form-control" rows= 10 readonly="true"><%= profile.bio%></textarea> </p>
+        <div class= "form-group">
+          <p> Bio: <textarea class="form-control" rows= 10 readonly="true"><%= profile.bio%></textarea> </p>
+        </div>
       <% if(portfolios.length){ %>
       <h3><%= portfolios[0].name %></h3>
       <hr>
