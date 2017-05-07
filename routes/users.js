@@ -11,8 +11,8 @@ router.route('/')
 	.post(ensure('/'), usersController.create);
 
 // GET for NEW restful route
-// router.route('/new')
-// 	.get(usersController.new);
+router.route('/new')
+	.get(usersController.new);
 
 // GET, Update, delete specific users
 router.route('/:id')

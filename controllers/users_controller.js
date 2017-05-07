@@ -32,6 +32,11 @@ controller.create = function(req,res){
 	});
 };
 
+controller.new = function(req,res){
+	res.render('newUser', {title:'PortHole - Sign Up'});
+};
+
+
 controller.show = function(req,res){
 	//Find and show user if they exist
 	User.findById(req.params.id)

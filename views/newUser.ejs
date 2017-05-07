@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <%- include('partials/header.ejs' ) %>
+    <% form_for("user", function(f){ %>
+        <%- f.label_for("name") %>
+        <%- f.text_field("name") %><br />
+        <%- f.label_for("password") %>
+        <%- f.password_field("password") %> <br />
+        <%- f.label_for("confirmPassword") %>
+        <%- f.password_field("confirmPassword") %><br />
+        <%- f.label_for("email") %>
+        <%- f.email_field("email") %> <br />
+        <%- f.submit() %><br />
+    <% }) %>
+   </body>
+</html>

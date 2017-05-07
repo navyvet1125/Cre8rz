@@ -40,12 +40,6 @@
     			 <textarea class="form-control viewBox" rows= 40 readonly="true"><%= message.body %></textarea>
                 </div>
     		</div>
-            <% form_for("user", function(f){ %>
-    <%- f.label_for("username") %>
-    <%- f.text_field("username") %><br />
-
-    <%- f.submit() %><br />
-<% }) %>
     	</section>
     </article>
   </body>
