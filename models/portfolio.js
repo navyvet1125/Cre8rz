@@ -3,7 +3,7 @@ var User = require('./user');
 var Entry = require('./entry');
 
 var portfolioSchema = new mongoose.Schema({
-	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
 	entries: [{type: mongoose.Schema.Types.ObjectId, ref: 'Entry',autopopulate:true}],
 	name: {type:String, default:'No Name'},
 	description: String,

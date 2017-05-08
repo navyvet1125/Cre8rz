@@ -1,4 +1,5 @@
 var User = require('../models/user');
+var Portfolio = require('../models/portfolio');
 var controller ={};
 
 controller.index = function(req, res) {
@@ -17,14 +18,19 @@ controller.index = function(req, res) {
 controller.create = function(req,res){
 	//creates a new user
 	var newUser = new User();
-	newUser.name = req.body.name;
-	newUser.email = req.body.email;
-	newUser.role ='new User';
-	newUser.password = req.body.password;
+	var inputUser = req.body;
+	newUser.name = inputUser['user[name]'];
+	newUser.email = inputUser['user[email]'];
+	newUser.login = inputUser['user[login]'];
+	if(inputUser['user[password]'] === inputUser['user[password]'])	newUser.password = inputUser['user[password]'];
+	else throw new Error('Passwords do not match!!!');
 	newUser.save()
 	.then(function(user){
 		//if create was successful
-		res.status(200).send(user);
+		return Portfolio.findOne({creator:user})
+	})
+	.then(function(portfolio){
+		res.status(200).render('dashboard', { title: 'PortHole', user:newUser, portfolios:[]});
 	})
 	.catch(function(err){
 		//error handling

@@ -28,22 +28,26 @@
               <h3>Location</h3>
               <h4><%= user.city %></h4>
             </div>
-            <div class="well">
-              <p><a href="#">Portfolios</a></p>
-              <div class ="row well">
-              <% portfolios[0].children.forEach(function(index){ %>
-                <div class="col-lg-6">
-                  <span class="label label-primary"><%= index.name %></span>
-                  <% if(index.children) {%> 
-                    <% index.children.forEach(function(childIndex){ %>
-                      <span class="label label-success"><%= childIndex.name %></span>
-                    <% }) %>
-                  <% }%>
+            <% if(portfolios.length){ %> 
+              <div class="well">
+                <p><a href="#">Portfolios</a></p>
+                  <div class ="row well">
+                    <% if(portfolios[0].children) { %> 
+                      <% portfolios[0].children.forEach(function(index){ %>
+                        <div class="col-lg-6">
+                          <span class="label label-primary"><%= index.name %></span>
+                          <% if(index.children) {%> 
+                            <% index.children.forEach(function(childIndex){ %>
+                              <span class="label label-success"><%= childIndex.name %></span>
+                            <% }) %>
+                          <% }%>
+                        </div>
+                      <% }) %>
+                    <% }%>
                 </div>
-              <% }) %>
-
               </div>
-            </div>
+            <% }%>
+            
             <% if(messages.numOfNewMessages) { %>
               <div class="alert alert-success fade in">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>

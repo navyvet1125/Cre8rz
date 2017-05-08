@@ -8,7 +8,7 @@ var ensure = require('connect-ensure-login').ensureLoggedIn;
 /* GET users listing and create new users*/
 router.route('/')
 	.get(ensure('/'), usersController.index)
-	.post(ensure('/'), usersController.create);
+	.post(usersController.create);
 
 // GET for NEW restful route
 router.route('/new')

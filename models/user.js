@@ -76,6 +76,12 @@ userSchema.pre('save',function(next){
 		this.activity.title = '<b>'+this.name + '</b> has updated their profile.';
 		this.activity.receivers = this.followers;
 		this.activity.receivers.unshift(this._id);
+	} else if(this.isNew){
+		this.portfolio = new Portfolio({
+			creator: this,
+			name: this.name+'\'s Portfolio.',
+			description: this.name+'\'s Portfolio.'
+		});
 	}
 	next();
 });
@@ -85,6 +91,12 @@ userSchema.post('save', function(doc){
 		this.activity.save()
 		.then(function(activity){
 			delete this.activity;
+		});
+	}
+	if(this.portfolio) {
+		this.portfolio.save()
+		.then(function(portfolio){
+			delete this.portfolio;
 		});
 	}
 });

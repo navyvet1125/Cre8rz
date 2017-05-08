@@ -54,7 +54,7 @@ controller.dashboard = function(req, res, next) {
 		return portfolio.getArrayTree();
 	})
 	.then(function(portfolios){
-		userPortfolios = portfolios;
+		if(portfolios) userPortfolios = portfolios;
 		return Endorsememt.find({subject: userId});
 	})
 	.then(function(endorsements){
