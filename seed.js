@@ -286,23 +286,12 @@ User.remove({})
             },
         ]);
     })
-    .then(function(events){
-        seedEvents = events;
-        return Activity.find({});
-    })
-    .then(function(activities){
+    .then(function(){
         console.log('Database Seeded');
-        return seedPortfolios[0].getArrayTree();
-    })
-    .then(function(results){
-        console.log(results);
-        return Event.find({});
-        
     })
     .catch(function(err){
         console.log(err);
     })
-    .then(function(results){
-        console.log(results);
-            process.exit();
+    .then(function(){
+        process.exit();
     });

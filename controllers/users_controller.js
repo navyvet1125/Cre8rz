@@ -16,21 +16,37 @@ controller.index = function(req, res) {
 };
 
 controller.create = function(req,res){
+	var passport   = require('passport');
+	require('../config/passport')(passport);
 	//creates a new user
 	var newUser = new User();
 	var inputUser = req.body;
 	newUser.name = inputUser['user[name]'];
 	newUser.email = inputUser['user[email]'];
 	newUser.login = inputUser['user[login]'];
+	newUser.city = inputUser['user[city]'];
 	if(inputUser['user[password]'] === inputUser['user[password]'])	newUser.password = inputUser['user[password]'];
 	else throw new Error('Passwords do not match!!!');
 	newUser.save()
 	.then(function(user){
 		//if create was successful
-		return Portfolio.findOne({creator:user})
+		return Portfolio.findOne({creator:user});
 	})
 	.then(function(portfolio){
-		res.status(200).render('dashboard', { title: 'PortHole', user:newUser, portfolios:[]});
+		res.redirect('/dashboard');
+		res.status(200).render('dashboard', { 
+			title: 'PortHole', 
+			user:newUser, 
+			portfolios: portfolio,
+			endorsements: [],
+			events: [],
+			messages: {
+				userMessages:[],
+				numOfNewMessages:0
+			},
+			following: [],
+			newsFeed: []
+		});
 	})
 	.catch(function(err){
 		//error handling

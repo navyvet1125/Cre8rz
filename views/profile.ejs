@@ -33,48 +33,48 @@
         <div class= "form-group">
           <p> Bio: <textarea class="form-control" rows= 10 readonly="true"><%= profile.bio%></textarea> </p>
         </div>
-      <% if(portfolios.length){ %>
-      <h3><%= portfolios[0].name %></h3>
-      <hr>
-      <div class = "row">
-        <% portfolios[0].children.forEach(function(index){ %> 
-
-          <!-- If there are any children, check if they have entries -->
-          <% if(index.children){ %> 
-            <div class="col-md-6">
-            <h4><%= index.name %></h4>
-              <% index.children.forEach(function(firstDepth){ %>
-                <p><%= firstDepth.name %></p>
-                <% if(firstDepth.entries) { %>
-                  <div class="well" >
-                    <% firstDepth.entries.forEach(function(secondEntries){ %>
-                    <p><%= secondEntries.title %></p>
-                    <p><%= secondEntries.category %></p>
-                    <p><%= secondEntries.description %></p>
-                    <div>
-                      <% secondEntries.content.forEach(function(content){ %>
-                        <div class="row">
-                          <div class="col-md-4">
-                            <img src="<%- content.src %>" alt="<%- content.desc %>" />
-                            <p><%= content.desc %></p>
+      <% if(portfolios.length>0){ %>
+        <h3><%= portfolios[0].name %></h3>
+        <hr>
+        <div class = "row">
+          <% if(portfolios[0].children) { %> 
+            <% portfolios[0].children.forEach(function(index){ %> 
+            <!-- If there are any children, check if they have entries -->
+            <% if(index.children.length){ %> 
+              <div class="col-md-6">
+                <h4><%= index.name %></h4>
+                <% index.children.forEach(function(firstDepth){ %>
+                  <p><%= firstDepth.name %></p>
+                  <% if(firstDepth.entries) { %>
+                    <div class="well" >
+                      <% firstDepth.entries.forEach(function(secondEntries){ %>
+                      <p><%= secondEntries.title %></p>
+                      <p><%= secondEntries.category %></p>
+                      <p><%= secondEntries.description %></p>
+                      <div>
+                        <% secondEntries.content.forEach(function(content){ %>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <img src="<%- content.src %>" alt="<%- content.desc %>" />
+                              <p><%= content.desc %></p>
+                            </div>
                           </div>
-                        </div>
+                        <% }) %>
+                      </div>
                       <% }) %>
                     </div>
-                    <% }) %>
-                  </div>
-                <% } %>
-              <% }) %>
-            </div>
-          <% } %>
-
+                  <% } %>
+                <% }) %>
+              </div>
+            <% } %>
           <!-- If there were any pictures in the first level -->
           <% if(index.entries) { %>
             <% index.entries.forEach(function(firstEntries){ %>
-            <p><%= firstEntries %></p>
+              <p><%= firstEntries %></p>
             <% }) %>
           <% } %>
         <% }) %>
+      <% } %>
       <% } %>
       </div>
       <footer>
