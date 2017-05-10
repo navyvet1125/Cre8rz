@@ -6,7 +6,7 @@ var cookieParser 	= require('cookie-parser');
 var bodyParser 		= require('body-parser');
 var bluebird 		= require('bluebird');
 var passport		= require('passport');
-var expressSession = require('express-session');
+var expressSession  = require('express-session');
 
 var index 			= require('./routes/index');
 var users 			= require('./routes/users');
