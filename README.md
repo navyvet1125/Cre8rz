@@ -1,4 +1,4 @@
-# PortHole (Working Title)
+# Cre8rz
 A site where artists can gather to create their portfolios, and see others portfolios
 ## Purpose
 The purpose of this site is to create a place where artists of any kind can submit their portfolios, receive feedback, build a following, and connect with other artists for support and inspiration.
