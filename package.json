@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "Haraka": "^2.8.13",
     "bcrypt": "^1.0.2",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.5.0",
