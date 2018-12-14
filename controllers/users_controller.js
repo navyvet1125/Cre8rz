@@ -1,32 +1,30 @@
-var User = require('../models/user');
-var Portfolio = require('../models/portfolio');
-var controller ={};
+const User = require('../models/user')
+const Portfolio = require('../models/portfolio')
 
-controller.index = function(req, res) {
+var controller ={}
+
+controller.index = (req, res) => {
 	//Returns listing of all users
 	User.find({})
-		.then(function(users){
-			//if it worked
-			res.status(200).send(users);
-		})
-		.catch(function(err){
-			//if it didn't
-			res.status(500).send(err);
-		});
-};
+		//if it worked
+		.then(users => res.status(200).send(users))
+		//if it didn't
+		.catch(err => res.status(500).send(err))
+}
 
 controller.create = function(req,res){
-	var passport   = require('passport');
+	const passport   = require('passport');
 	require('../config/passport')(passport);
 	//creates a new user
 	var newUser = new User();
-	var inputUser = req.body;
-	newUser.name = inputUser['user[name]'];
-	newUser.email = inputUser['user[email]'];
-	newUser.login = inputUser['user[login]'];
-	newUser.city = inputUser['user[city]'];
-	if(inputUser['user[password]'] === inputUser['user[password]'])	newUser.password = inputUser['user[password]'];
-	else throw new Error('Passwords do not match!!!');
+	let inputUser = req.body;
+	inputUser['user[password]'] === inputUser['user[password]']? newUser= inputUser: new Error('Passwords do not match!!!')
+	
+	// newUser.name = inputUser['user[name]'];
+	// newUser.email = inputUser['user[email]'];
+	// newUser.login = inputUser['user[login]'];
+	// newUser.city = inputUser['user[city]'];
+	// inputUser['user[password]'] === inputUser['user[password]']? newUser.password = inputUser['user[password]']: new Error('Passwords do not match!!!')
 	newUser.save()
 	.then(function(user){
 		//if create was successful

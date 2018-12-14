@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
-var User 	 = require('./user');
-var Comment = require('./comment');
+const mongoose = require('mongoose')
+const User 	 = require('./user')
+const Comment = require('./comment')
 
-var activitySchema = new mongoose.Schema({
+const activitySchema = new mongoose.Schema({
 	//New information for the news feeds.
 	//Date includes when the  activity was created,
 	//the profile picture of the person who the activity tracks,
@@ -19,8 +19,8 @@ var activitySchema = new mongoose.Schema({
 	receivers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true}],
 });
 
-activitySchema.plugin(require('mongoose-autopopulate'));
+activitySchema.plugin(require('mongoose-autopopulate'))
 
-var Activity = mongoose.model('Activity', activitySchema);
+const Activity = mongoose.model('Activity', activitySchema)
 
-module.exports = Activity;
+module.exports = Activity

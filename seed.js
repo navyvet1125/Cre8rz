@@ -1,18 +1,18 @@
-var db             = require('./config/db');
-var User		   = require('./models/user');
-var Portfolio      = require('./models/portfolio');
-var Entry          = require('./models/entry');
-var Event          = require('./models/event');
-var Comment        = require('./models/comment');
-var Message        = require('./models/message');
-var Activity        = require('./models/activity');
+const db             = require('./config/db')
+const User		     = require('./models/user')
+const Portfolio      = require('./models/portfolio')
+const Entry          = require('./models/entry')
+const Event          = require('./models/event')
+const Comment        = require('./models/comment')
+const Message        = require('./models/message')
+const Activity       = require('./models/activity')
 
-var truePass='Salamander';
-var seedUsers;
-var seedPortfolios;
-var seedEntries;
-var seedEvents;
-var testContent= [
+const truePass='Salamander'
+let seedUsers
+let seedPortfolios
+let seedEntries
+let seedEvents
+const testContent= [
     {
         src:'/images/kingyo.png',
         desc:'Kingyo Sukui'
@@ -25,59 +25,48 @@ var testContent= [
         src:'/images/prayer.png',
         desc:'Prayer Hub'
     }
-];
+]
+const testUsers =[
+    {
+        name:'Evan Washington', 
+        email:'enavy04@gmail.com',
+        login:'defMethod82',
+        type:'admin', 
+        city:'Inglewood, CA',
+        career:'website' ,
+        password: truePass,
+        candy:'green',
+        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel commodo magna. Mauris sodales turpis orci, sed luctus elit consectetur ac. Morbi maximus pellentesque augue vel pharetra. In vel ligula eu nibh vulputate eleifend eu quis sapien. Donec ac vestibulum nisl. Ut aliquet at elit et venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus metus felis, fringilla vel diam id, rutrum interdum nisi. Quisque ullamcorper, leo et egestas hend' 
+    },
+    {
+        name:'Milyani Rizal', 
+        email:'milly@yahoo.com',
+        login:'milly',
+        city:'Culver City, CA', 
+        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel commodo magna. Mauris sodales turpis orci, sed luctus elit consectetur ac. Morbi maximus pellentesque augue vel pharetra. In vel ligula eu nibh vulputate eleifend eu quis sapien. Donec ac vestibulum nisl. Ut aliquet at elit et venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus metus felis, fringilla vel diam id, rutrum interdum nisi. Quisque ullamcorper, leo et egestas hend' 
+    },
+    {
+        name:'Indra Aris', 
+        email:'indra@Aris.com',
+        login:'the_artist', 
+        type:'artist', 
+        city:'West Hollywood, CA', 
+        career:'fasion',
+        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel commodo magna. Mauris sodales turpis orci, sed luctus elit consectetur ac. Morbi maximus pellentesque augue vel pharetra. In vel ligula eu nibh vulputate eleifend eu quis sapien. Donec ac vestibulum nisl. Ut aliquet at elit et venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus metus felis, fringilla vel diam id, rutrum interdum nisi. Quisque ullamcorper, leo et egestas hend' 
+    }
+]
 //Clear database and reseed it with new information.
 User.remove({})
-    .then(function(){
-        return Activity.remove();
-    })
-    .then(function(){
-        return Event.remove();
-    })
-    .then(function(){
-        return Portfolio.remove();
-    })
-    .then(function(){
-        return Entry.remove();
-    })
-    .then(function(){
-        return Comment.remove();
-    })
-    .then(function(){
-        return Message.remove();
-    })
- 	.then(function(){
-  		return User.create([
-    		{
-                name:'Evan Washington', 
-                email:'enavy04@gmail.com',
-                login:'defMethod82',
-                type:'admin', 
-                city:'Inglewood, CA',
-                career:'website' ,
-                password: truePass,
-                bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel commodo magna. Mauris sodales turpis orci, sed luctus elit consectetur ac. Morbi maximus pellentesque augue vel pharetra. In vel ligula eu nibh vulputate eleifend eu quis sapien. Donec ac vestibulum nisl. Ut aliquet at elit et venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus metus felis, fringilla vel diam id, rutrum interdum nisi. Quisque ullamcorper, leo et egestas hend' 
-            },
-    		{
-                name:'Milyani Rizal', 
-                email:'milly_la@yahoo.com',
-                login:'milly_la',
-                city:'Culver City, CA', 
-                bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel commodo magna. Mauris sodales turpis orci, sed luctus elit consectetur ac. Morbi maximus pellentesque augue vel pharetra. In vel ligula eu nibh vulputate eleifend eu quis sapien. Donec ac vestibulum nisl. Ut aliquet at elit et venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus metus felis, fringilla vel diam id, rutrum interdum nisi. Quisque ullamcorper, leo et egestas hend' 
-            },
-    		{
-                name:'Indra Aris', 
-                email:'indra@Aris.com',
-                login:'the_artist', 
-                type:'artist', 
-                city:'West Hollywood, CA', 
-                career:'fasion',
-                bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel commodo magna. Mauris sodales turpis orci, sed luctus elit consectetur ac. Morbi maximus pellentesque augue vel pharetra. In vel ligula eu nibh vulputate eleifend eu quis sapien. Donec ac vestibulum nisl. Ut aliquet at elit et venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus metus felis, fringilla vel diam id, rutrum interdum nisi. Quisque ullamcorper, leo et egestas hend' 
-            }
-    	]);
-    })
-    .then(function(users){
-        seedUsers = users;
+    .then( () => Activity.remove())
+    .then( () => Event.remove())
+    .then( () => Portfolio.remove())
+    .then( () => Entry.remove())
+    .then( () => Comment.remove())
+    .then( () => Message.remove())
+ 	.then( () => User.create(testUsers))
+    .then(users => {
+        seedUsers = users
+        console.log(users[0])
         return Portfolio.create([
             {
                 creator: seedUsers[0]._id,
@@ -86,10 +75,10 @@ User.remove({})
                 purpose:'hybrid',
                 type:'website'
             }
-        ]);
+        ])
     })
-    .then(function(portfolios){
-        seedPortfolios = portfolios;
+    .then(portfolios => {
+        seedPortfolios = portfolios
         return Portfolio.create([
             {
                 creator: seedUsers[0]._id,
@@ -109,9 +98,9 @@ User.remove({})
                 parentId: seedPortfolios[0]._id,
                 type:'website'
             }
-        ]);
+        ])
     })
-    .then(function(portfolios){
+    .then(portfolios => {
         seedPortfolios = seedPortfolios.concat(portfolios)
         return Portfolio.create([
             {
@@ -128,9 +117,9 @@ User.remove({})
                 name: '2017 Sites',
                 description:'The sites I created in 2017.'
             },
-        ]);
+        ])
     })
-    .then(function(portfolios){
+    .then(portfolios => {
         seedPortfolios = seedPortfolios.concat(portfolios)
         return Entry.create([
             {
@@ -154,33 +143,33 @@ User.remove({})
                 approved: true
             },
 
-        ]);
+        ])
     })
-    .then(function(entries){
-        seedEntries = entries;
-        seedUsers[0].followers = entries[0].likes;
-        return seedUsers[0].save();
+    .then(entries => {
+        seedEntries = entries
+        seedUsers[0].followers = entries[0].likes
+        return seedUsers[0].save()
     })
-    .then(function(){
-        seedPortfolios[3].entries.push(seedEntries[0]);
-        return seedPortfolios[3].save();
+    .then( () =>  {
+        seedPortfolios[3].entries.push(seedEntries[0])
+        return seedPortfolios[3].save()
     })
-    .then(function(){
-        seedPortfolios[4].entries.push(seedEntries[1]);
-        return seedPortfolios[4].save();
+    .then( () => {
+        seedPortfolios[4].entries.push(seedEntries[1])
+        return seedPortfolios[4].save()
     })
-    .then(function(){
-        seedUsers[0].name = 'Evan J. Washington';
-        return seedUsers[0].save();
+    .then( () => {
+        seedUsers[0].name = 'Evan J. Washington'
+        return seedUsers[0].save()
     })
-    .then(function(){
-        seedUsers[0].city = 'Los Angeles, CA';
-        return seedUsers[0].save();
+    .then( () => {
+        seedUsers[0].city = 'Los Angeles, CA'
+        return seedUsers[0].save()
     })
-    .then(function(){
-        return seedUsers[0].save();
+    .then( () => {
+        return seedUsers[0].save()
     })
-    .then(function(){
+    .then( () => {
         return Comment.create([
             {
                 subject: seedEntries[0]._id,
@@ -192,9 +181,9 @@ User.remove({})
                 creator: seedUsers[2]._id,
                 body: 'Amazing!!',
             } 
-        ]);
+        ])
     })
-    .then(function () {
+    .then( () => {
         return Message.create([
             {
                 sender:seedUsers[0]._id,
@@ -260,9 +249,9 @@ User.remove({})
                 body:'Hi!  How are you?',
                 hidden: Date.now()
             }
-        ]);
+        ])
     })
-    .then(function(){
+    .then( () => {
         return Event.create([
             {
                 creator: seedUsers[0]._id,
@@ -270,8 +259,8 @@ User.remove({})
                 description: 'Testing to see if this works...',
                 location:'Anywhere, U.S.A.',
                 when: new Date("03/30/2018 21:25"),
-                attendees: seedUsers.map(function(key){return key._id;}),
-                likes: seedUsers.map(function(key){return key._id;}),
+                attendees: seedUsers.map(key => {return key._id}),
+                likes: seedUsers.map(key => {return key._id}),
                 approved: true
             },
             {
@@ -280,18 +269,18 @@ User.remove({})
                 description: 'Testing to see if this works...',
                 location:'Culver City, CA',
                 when: new Date("04/28/2017 19:30"),
-                attendees: seedUsers.map(function(key){return key._id;}),
-                likes: seedUsers.map(function(key){return key._id;}),
+                attendees: seedUsers.map(key => {return key._id}),
+                likes: seedUsers.map(key => {return key._id}),
                 approved: true
             },
-        ]);
+        ])
     })
-    .then(function(){
-        console.log('Database Seeded');
+    .then( () => {
+        console.log('Database Seeded')
     })
-    .catch(function(err){
-        console.log(err);
+    .catch( err => {
+        console.log(err)
     })
-    .then(function(){
-        process.exit();
-    });
+    .then( () =>{
+        process.exit()
+    })

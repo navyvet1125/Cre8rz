@@ -4,7 +4,6 @@ var mongoUrl = process.env.MONGODB_URI
 
  mongoose.connect(mongoUrl, {
   useMongoClient: true,
-  /* other options */
 })
  .then(function(){
  	console.log('database connected')

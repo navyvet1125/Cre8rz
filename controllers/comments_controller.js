@@ -1,18 +1,14 @@
-var Comment = require('../models/comment');
-var controller ={};
+var Comment = require('../models/comment')
+var controller ={}
 
-controller.index = function(req, res) {
+controller.index = (req, res) => {
 	//Returns listing of all comments
 	Comment.find({})
-		.then(function(comments){
-			//if it worked
-			res.status(200).send(comments);
-		})
-		.catch(function(err){
-			//if it didn't
-			res.status(500).send(err);
-		});
-};
+		//if it worked
+		.then(comments => res.status(200).send(comments))
+		//if it didn't
+		.catch(err => res.status(500).send(err))
+}
 
 controller.create = function(req,res){
 	//creates a new comment
