@@ -1,6 +1,7 @@
 [![Build Status][ci-img]][ci-url]
 [![Coverage Status][cov-img]][cov-url]
 [![Code Climate][clim-img]][clim-url]
+[![Greenkeeper badge](https://badges.greenkeeper.io/haraka/haraka-constants.svg)](https://greenkeeper.io/)
 [![NPM][npm-img]][npm-url]
 
 # haraka-constants
