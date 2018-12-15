@@ -1,31 +1,24 @@
-var nodemailer = require('nodemailer');
-var mailer = function(userTo, subject, body, htmlBody){
+const nodemailer = require('nodemailer')
+module.exports = (to, subject, text, html) =>{
    //reusable transport
-  var smtpTransport = nodemailer.createTransport("SMTP",{
+  const smtpTransport = nodemailer.createTransport("SMTP",{
      service: "Gmail",
      auth: {
          user: process.env.GMAIL_ADDRESS,
          pass: process.env.GMAIL_PASSWORD
      }
-  });
+  })
   //set up email data
-  var mailOptions = {
+  const mailOptions = {
      from: "Cre8rz <"+ process.env.GMAIL_ADDRESS +">", // sender address
-     to: userTo, // receiver
-     subject: subject, // Subject line
-     text: body, // plaintext body
-     html: htmlBody // html body
-  };
+     to, // receiver
+     subject, // Subject line
+     text, // plaintext body
+     html // html body
+  }
   // send mail with defined transport object
-  smtpTransport.sendMail(mailOptions, function(error, response){
-     if(error){
-         console.log(error);
-     }else{
-         console.log("Message sent: " + response.message);
-     }
-     // if you don't want to use this transport object anymore, uncomment following line
-     //smtpTransport.close(); // shut down the connection pool, no more messages
-  });
-};
-
-module.exports = mailer;
+  smtpTransport.sendMail(mailOptions)
+   .then ((error, response) => error ? console.log(error): console.log("Message sent: " + response.message))
+   // shut down the connection pool, no more messages
+   .then(smtpTransport.close()) 
+}

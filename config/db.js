@@ -1,15 +1,9 @@
-var mongoose = require('mongoose')
+const mongoUrl = process.env.MONGODB_URI
+const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
-var mongoUrl = process.env.MONGODB_URI
 
- mongoose.connect(mongoUrl, {
-  useMongoClient: true,
-})
- .then(function(){
- 	console.log('database connected')
- })
- .catch(function(err){
-    console.log(err)
-})
+ mongoose.connect(mongoUrl, {useMongoClient: true,})
+ .then( () => console.log('database connected'))
+ .catch( err => console.log(err))
 
 module.exports = mongoose
