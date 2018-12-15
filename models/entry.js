@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird')
 var Portfolio = require('./portfolio');
 var User = require('./user');
 var Comment = require('./comment');

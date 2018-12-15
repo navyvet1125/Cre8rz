@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+mongoose.Promise = require('bluebird')
 const User 	 = require('./user')
 const Comment = require('./comment')
 

@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird')
 var User 	 = require('./user');
 
 var endorsementSchema = new mongoose.Schema({
