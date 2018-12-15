@@ -1,86 +1,51 @@
-var Endorsement = require('../models/endorsement');
-var controller ={};
-
-controller.index = function(req, res) {
-	//Returns listing of all endorsements
-	Endorsement.find({})
-		.then(function(endorsements){
-			//if it worked
-			res.status(200).send(endorsements);
+const Endorsement = require('../models/endorsement')
+module.exports ={
+	index : (req, res) => {
+		//Returns listing of all endorsements
+		Endorsement.find({})
+			//Send them if it worked
+			.then(endorsements => res.status(200).send(endorsements))
+			.catch(err => res.status(500).send(err))
+	},
+	create : (req,res) => {
+		//creates a new endorsement
+		const newEndorsement = new Endorsement({
+			subject : req.body.subject,
+			creator : req.body.creator,
+			title : req.body.title,
+			body : req.body.body,
+			rating : req.body.rating || 'none'
 		})
-		.catch(function(err){
-			//if it didn't
-			res.status(500).send(err);
-		});
-};
+		newEndorsement.save()
+		//Send it if it worked
+		.then(endorsement => res.status(200).send(endorsement))
+		.catch(err => res.status(500).send(err))
+	},
+	show : (req,res) => {
+		//Find and show endorsement if it exists
+		Endorsement.findById(req.params.id)
+		.then(endorsement => res.status(200).send(endorsement))
+		.catch(err => res.status(500).send(err))
+	},
+	update : (req,res) => {
+		//Find and update a endorsement
+		Endorsement.findById(req.params.id)
+		.then(endorsement => {
+			//if title, body, or rating of the endorsement has changed then update it and indicate the time it was changed.
+			if(req.body.title)endorsement.title = req.body.title
+			if(req.body.body)endorsement.body = req.body.body
+			if(req.body.rating)endorsement.rating = req.body.rating
+			endorsement.modified = Date.now()
 
-controller.create = function(req,res){
-	//creates a new endorsement
-	var newEndorsement = new Endorsement();
-	newEndorsement.subject = req.body.subject;
-	newEndorsement.creator = req.body.creator;
-	newEndorsement.title = req.body.title;
-	newEndorsement.body = req.body.body;
-	if(req.body.rating)newEndorsement.rating = req.body.rating;
-	newEndorsement.save()
-	.then(function(endorsement){
-		//if create was successful
-		res.status(200).send(endorsement);
-	})
-	.catch(function(err){
-		//error handling
-		res.status(500).send(err);
-	});
-};
-
-controller.show = function(req,res){
-	//Find and show endorsement if it exists
-	Endorsement.findById(req.params.id)
-	.then(function(endorsement){
-		res.status(200).send(endorsement);
-	})
-	.catch(function(err){
-		//error handling
-		res.status(500).send(err);
-	});
-};
-
-controller.update = function(req,res){
-	//Find and update a endorsement
-	Endorsement.findById(req.params.id)
-	.then(function(endorsement){
-		//if title, body, or rating of the endorsement has changed then update it and indicate the time it was changed.
-		if(req.body.title)endorsement.title = req.body.title;
-		if(req.body.body)endorsement.body = req.body.body;
-		if(req.body.rating)endorsement.rating = req.body.rating;
-		endorsement.modified = Date.now();
-
-		return endorsement.save();
-	})
-	.then(function(endorsement){
-		if(endorsement)res.status(200).send(endorsement);
-		//error handling
-		else res.status(404).send({status: 404, message:'Endorsement not found!'});
-	})
-	.catch(function(err){
-		//error handling
-		res.status(500).send(err);
-	});
-};
-
-controller.delete = function(req,res){
-	//find and removes endorsement
-	Endorsement.findByIdAndRemove(req.params.id)
-	.then(function(endorsement){
-		//status update based on whether or not the endorsement exists
-		if(endorsement)res.status(200).send({status: 200, message:'Endorsement Successfully Deleted!'});
-		else res.status(404).send({status: 404, message:'Endorsement not found!'});
-	})
-	.catch(function(err){
-		//error handling
-		res.status(500).send(err);
-	});
-
-};
-
-module.exports = controller;
+			return endorsement.save();
+		})
+		.then(endorsement => endorsement? res.status(200).send(endorsement): res.status(404).send({status: 404, message:'Endorsement not found!'}))
+		.catch(err => res.status(500).send(err))
+	},
+	delete : (req,res) => {
+		//find and removes endorsement
+		Endorsement.findByIdAndRemove(req.params.id)
+		.then(endorsement => endorsement? res.status(200).send({status: 200, message:'Endorsement Successfully Deleted!'}): res.status(404).send({status: 404, message:'Endorsement not found!'}))
+		.catch(err => res.status(500).send(err))
+	}
+}
