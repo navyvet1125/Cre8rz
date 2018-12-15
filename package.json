@@ -1,6 +1,6 @@
 {
-  "name": "porthole",
-  "version": "0.0.0",
+  "name": "cre8rz",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
