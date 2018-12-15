@@ -11,10 +11,11 @@ module.exports = {
 	create : (req,res) =>{
 		//creates a new comment
 
-		const newComment = new Comment({subject: req.body.subject, creator: req.body.creator, body:req.body.body})
-		// newComment.subject = req.body.subject
-		// newComment.creator = req.body.creator
-		// newComment.body = req.body.body
+		const newComment = new Comment({
+			subject: req.body.subject, 
+			creator: req.body.creator, 
+			body:req.body.body
+		})
 		newComment.save()
 		//if create was successful
 		.then(comment => res.status(200).send(comment))

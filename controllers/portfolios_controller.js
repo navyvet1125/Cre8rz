@@ -1,86 +1,52 @@
-var Portfolio = require('../models/portfolio');
-var controller ={};
+const Portfolio = require('../models/portfolio')
+module.exports ={
+	index : (req, res) => {
+		//Returns listing of all portfolios
+		Portfolio.find({})
+			.then(portfolios => res.status(200).send(portfolios))
+			.catch(err => res.status(500).send(err))
+	},
 
-controller.index = function(req, res) {
-	//Returns listing of all portfolios
-	Portfolio.find({})
-		.then(function(portfolios){
-			//if it worked
-			res.status(200).send(portfolios);
+	create : (req,res) =>{
+		//creates a new portfolio
+		const newPortfolio = new Portfolio({
+			creator : req.body.creator
+			name : req.body.name
+			description : req.body.description
+			type : req.body.type
+			purpose : req.body.purpose
 		})
-		.catch(function(err){
-			//if it didn't
-			res.status(500).send(err);
-		});
-};
+		newPortfolio.save()
+		.then(portfolio =>res.status(200).send(portfolio))
+		.catch(err => res.status(500).send(err))
+	},
+	show : (req,res) => {
+		//Find and show portfolio if it exists
+		Portfolio.findById(req.params.id)
+		.then(portfolio => res.status(200).send(portfolio))
+		.catch(err => res.status(500).send(err))
+	},
 
-controller.create = function(req,res){
-	//creates a new portfolio
-	var newPortfolio = new Portfolio();
-	newPortfolio.creator = req.body.creator;
-	newPortfolio.name = req.body.name;
-	newPortfolio.description = req.body.description;
-	newPortfolio.type = req.body.type;
-	newPortfolio.purpose = req.body.purpose;
-	newPortfolio.save()
-	.then(function(portfolio){
-		//if create was successful
-		res.status(200).send(portfolio);
-	})
-	.catch(function(err){
-		//error handling
-		res.status(500).send(err);
-	});
-};
+	update : (req,res)=> {
+		//Find and update a portfolio
+		Portfolio.findById(req.params.id)
+		.then(portfolio => {
+			if(req.body.name)portfolio.name = req.body.name;
+			if(req.body.description)portfolio.description = req.body.description;
+			if(req.body.type)portfolio.type = req.body.type;
+			if(req.body.purpose)portfolio.purpose = req.body.purpose;
+			portfolio.modified = Date.now();
 
-controller.show = function(req,res){
-	//Find and show portfolio if it exists
-	Portfolio.findById(req.params.id)
-	.then(function(portfolio){
-		res.status(200).send(portfolio);
-	})
-	.catch(function(err){
-		//error handling
-		res.status(500).send(err);
-	});
-};
+			return portfolio.save();
+		})
+		.then(portfolio => portfolio? res.status(200).send(portfolio): res.status(404).send({status: 404, message:'Portfolio not found!'}))
+		.catch(err => res.status(500).send(err))
+		},
 
-controller.update = function(req,res){
-	//Find and update a portfolio
-	Portfolio.findById(req.params.id)
-	.then(function(portfolio){
-		if(req.body.name)portfolio.name = req.body.name;
-		if(req.body.description)portfolio.description = req.body.description;
-		if(req.body.type)portfolio.type = req.body.type;
-		if(req.body.purpose)portfolio.purpose = req.body.purpose;
-		portfolio.modified = Date.now();
-
-		return portfolio.save();
-	})
-	.then(function(portfolio){
-		if(portfolio)res.status(200).send(portfolio);
-		//error handling
-		else res.status(404).send({status: 404, message:'Portfolio not found!'});
-	})
-	.catch(function(err){
-		//error handling
-		res.status(500).send(err);
-	});
-};
-
-controller.delete = function(req,res){
-	//find and removes portfolio
-	Portfolio.findByIdAndRemove(req.params.id)
-	.then(function(portfolio){
-		//status update based on whether or not the portfolio exists
-		if(portfolio)res.status(200).send({status: 200, message:'Portfolio Successfully Deleted!'});
-		else res.status(404).send({status: 404, message:'Portfolio not found!'});
-	})
-	.catch(function(err){
-		//error handling
-		res.status(500).send(err);
-	});
-
-};
-
-module.exports = controller;
+	delete : (req,res) => {
+		//find and removes portfolio
+		Portfolio.findByIdAndRemove(req.params.id)
+		.then(portfolio =>	portfolio? res.status(200).send({status: 200, message:'Portfolio Successfully Deleted!'}):res.status(404).send({status: 404, message:'Portfolio not found!'}))
+		.catch(err => res.status(500).send(err))
+	}
+}
