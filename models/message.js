@@ -1,10 +1,10 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
-var User = require('./user');
+const User = require('./user')
 
 
-var messageSchema = new mongoose.Schema({
-	sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate:true},		//Who sent it?
+const messageSchema = new mongoose.Schema({
+	sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},		//Who sent it?
 	receiver: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},		//Who is it for?
 	subject: {type: String, default: 'No Subject'},						//subject
 	body: String,														//Content of the message
@@ -17,48 +17,45 @@ var messageSchema = new mongoose.Schema({
 	], default:'root'},													//If the message is a reply, a forward, or if it is neither.
 	trashed: Date,														//If and when the message was marked as trash.
 	hidden: Date														//If and when the sender trashed the message.
-});
-
-messageSchema.plugin(require('mongoose-autopopulate'));
-messageSchema.plugin(require('mongoose-materialized'));
+})
 
 
-messageSchema.statics.findBySender = function(sender, type, cb){				//Find messages by sender
+messageSchema.statics.findBySender = (sender, type, cb) => {				//Find messages by sender
 	// Note: Will default to sending only unhidden messages.
 	if(type==='all') {
-		return this.find({sender:sender},cb);
+		return this.find({sender:sender},cb)
 	}
 	else if(type==='new'){
 		return this.find({
 			sender: sender, 
 			hidden: undefined, 
 			read: undefined
-		},cb);
+		},cb)
 	}
 	else return this.find({
 		sender: sender,
 		hidden: undefined
-	}, cb);
-};
+	}, cb)
+}
 
-messageSchema.statics.findByReceiver = function(receiver, type, cb){			//Find messages by recipient
+messageSchema.statics.findByReceiver = function(receiver, type, cb) {			//Find messages by recipient
 	// Note: Will default to sending only messages that were not trashed.
 	if(type==='all') {
-		return this.find({receiver:receiver},cb);
+		return this.find({receiver:receiver},cb)
 	}
 	else if(type==='new'){
 		return this.find({
 			receiver:receiver, 
 			trashed: undefined, 
 			read: undefined
-		},cb);
+		},cb)
 	}
 	else return this.find({
 		receiver: receiver,
 		trashed: undefined
-	}, cb);
-};
+	}, cb)
+}
 
-var Message = mongoose.model('Message', messageSchema);
+const Message = mongoose.model('Message', messageSchema)
 
-module.exports = Message;
+module.exports = Message

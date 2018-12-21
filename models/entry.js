@@ -1,11 +1,11 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
-var Portfolio = require('./portfolio');
-var User = require('./user');
-var Comment = require('./comment');
+const Portfolio = require('./portfolio')
+const User = require('./user')
+const Comment = require('./comment')
 
-var entrySchema = new mongoose.Schema({
-	creator:  {type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true}, //Creator objectId
+const entrySchema = new mongoose.Schema({
+	creator:  {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, //Creator objectId
 	portfolio: {type: mongoose.Schema.Types.ObjectId, ref: 'Portfolio', autopopulate:true}, //Portfolio objectId
 	title: String,												  //Title of the Entry
 	url: String,												  //Url if applicable
@@ -26,19 +26,15 @@ var entrySchema = new mongoose.Schema({
 	created: {type: Date, default: Date.now()},					  //When it was made
 	modified: Date,												  //When the entry was modified.
 	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],  //People who like the entry
-	comments:[{type: mongoose.Schema.Types.ObjectId, ref: 'Comment', autopopulate: true}],
+	comments:[{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
 	approved: {type: Boolean, default: true}  					  //If the entry is approved
-});
-entrySchema.plugin(require('mongoose-autopopulate'));
+})
+entrySchema.plugin(require('mongoose-autopopulate'))
 
-entrySchema.statics.findByCategory = function(category, cb){
-	return this.find({category: category}, cb);
-};
+entrySchema.statics.findByCategory = (category, cb) => this.find({category: category}, cb)
 
-entrySchema.statics.findByPortfolio = function(portfolio, cb){
-	return this.find({portfolio: portfolio}, cb);
-};
+entrySchema.statics.findByPortfolio = (portfolio, cb) => this.find({portfolio: portfolio}, cb)
 
-var Entry = mongoose.model('Entry', entrySchema);
+const Entry = mongoose.model('Entry', entrySchema)
 
-module.exports = Entry;
+module.exports = Entry

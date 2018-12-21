@@ -10,10 +10,10 @@ module.exports ={
 	create : (req,res) =>{
 		//creates a new portfolio
 		const newPortfolio = new Portfolio({
-			creator : req.body.creator
-			name : req.body.name
-			description : req.body.description
-			type : req.body.type
+			creator : req.body.creator,
+			name : req.body.name,
+			description : req.body.description,
+			type : req.body.type,
 			purpose : req.body.purpose
 		})
 		newPortfolio.save()

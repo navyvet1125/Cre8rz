@@ -66,7 +66,6 @@ User.remove({})
  	.then( () => User.create(testUsers))
     .then(users => {
         seedUsers = users
-        console.log(users[0])
         return Portfolio.create([
             {
                 creator: seedUsers[0]._id,
@@ -164,9 +163,6 @@ User.remove({})
     })
     .then( () => {
         seedUsers[0].city = 'Los Angeles, CA'
-        return seedUsers[0].save()
-    })
-    .then( () => {
         return seedUsers[0].save()
     })
     .then( () => {

@@ -1,10 +1,10 @@
-var mongoose = require('mongoose')
+const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
-var User = require('./user');
-var materializedPlugin = require('mongoose-materialized');
+const User = require('./user');
+const materializedPlugin = require('mongoose-materialized')
 
 
-var commentSchema = new mongoose.Schema({
+const commentSchema = new mongoose.Schema({
 	// A model for comments.  
 	subject: {type: mongoose.Schema.Types.ObjectId, required: true},				//what is being commented on
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},	//Who created the comment.
@@ -13,17 +13,13 @@ var commentSchema = new mongoose.Schema({
 	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],  					//People who like the comment.
 	body: String,																	//The body of the comment.
 	isReply: {type: Boolean, default: false}										//Is this comment a reply to an earlier comment?
-});
+})
 
-commentSchema.plugin(materializedPlugin);
+commentSchema.plugin(materializedPlugin)
 
-commentSchema.statics.findByCreator = function(creator, cb){
-	return this.find({creator: creator}, cb);
-};
+commentSchema.statics.findByCreator = (creator, cb) => this.find({creator: creator}, cb)
 
-commentSchema.statics.findBySubject = function(subject, cb){
-	return this.find({subject: subject}, cb);
-};
+commentSchema.statics.findBySubject = (subject, cb) => this.find({subject: subject}, cb)
 
-var Comment = mongoose.model('Comment', commentSchema);
-module.exports = Comment;
+const Comment = mongoose.model('Comment', commentSchema)
+module.exports = Comment

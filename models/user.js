@@ -1,11 +1,11 @@
-var mongoose 	= require('mongoose');
+const mongoose 	= require('mongoose')
 mongoose.Promise = require('bluebird')
-var Activity	= require('./activity');
-var Portfolio 	= require('./portfolio');
-var Event		= require('./event');
+const Activity	= require('./activity')
+const Portfolio 	= require('./portfolio')
+const Event		= require('./event')
 
 
-var userSchema  = new mongoose.Schema({
+const userSchema  = new mongoose.Schema({
 	//Artist is someone who uses the website for their portfolio.
 	//Visitors are people who have accounts but do not keep their portfolios on the site
 	//Admin users can add or remove anyone, change anyone's type, and can add,
@@ -34,74 +34,54 @@ var userSchema  = new mongoose.Schema({
 	fb_access_token: String,
 	google_access_token: String,
 	// A list of followers the artist has.  An array of User Id's
-	followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate:true}],
+	followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 	//A list of all events the artist is attending.
-	attending: [{type: mongoose.Schema.Types.ObjectId, ref: 'Event', autopopulate:true}],
+	attending: [{type: mongoose.Schema.Types.ObjectId, ref: 'Event'}],
 	approved: {type: Boolean, default: false},  					  //If the profile is approved
 	active: {type: Boolean, default: true}  					  //If the profile is active
-});
-userSchema.plugin(require('mongoose-bcrypt'));
-userSchema.plugin(require('mongoose-autopopulate'));
+})
+userSchema.plugin(require('mongoose-bcrypt'))
 //search users by type
-userSchema.statics.findByType = function(type, cb){
-	return this.find({type: type}, cb);
-};
+userSchema.statics.findByType = (type, cb) => this.find({type: type}, cb)
 //Search users by career
-userSchema.statics.findByCareer = function(career, cb){
-	return this.find({career: career}, cb);
-};
+userSchema.statics.findByCareer = (career, cb) => this.find({career: career}, cb)
 //Search users by Email
-userSchema.statics.findByEmail = function(email, cb){
-	return this.findOne({email: email}, cb);
-};
+userSchema.statics.findByEmail = (email, cb) => this.findOne({email: email}, cb)
 
 //Search to see if the user is of a certain type.
-userSchema.statics.searchNameAndType = function(name, type, cb){
-	this.find({type: type}, function(err, users){
-		if(err) return err;
-		var person;
-		users.forEach(function(user){
-			if(user.name.toLowerCase() === name.toLowerCase())person = user;
-		});
-		return cb(err, person);
-	});
-};
+userSchema.statics.searchNameAndType = (name, type, cb) => {
+	this.find({type: type})
+	.then( users => cb(null, users.filter(user => user.name.toLowerCase() === name.toLowerCase)))
+	.catch( err => cb(err, null))
+}
 
-userSchema.pre('save',function(next){
+userSchema.pre('save',function(next) {
 	//If there is a change to an already created user, then generate a new activity.
 	if(!this.isNew && (this.isModified('career')||this.isModified('city')||this.isModified('bio')||this.isModified('name'))){
-		this.activity = new Activity();
-		// Activity needs: picture, title, body, receivers
-		this.activity.name = this.name;
-		this.activity.picture = (this.fb_avatar)? this.fb_avatar: this.google_avatar;
-		this.activity.title = '<b>'+this.name + '</b> has updated their profile.';
-		this.activity.receivers = this.followers;
-		this.activity.receivers.unshift(this._id);
+		this.activity = new Activity({
+			name: this.name,
+			picture:(this.fb_avatar)? this.fb_avatar: this.google_avatar,
+			title: '<b>'+this.name + '</b> has updated their profile.',
+			recievers: this.followers.concat(this._id)
+		})
+		this.activity.save()
 	} else if(this.isNew){
 		this.portfolio = new Portfolio({
 			creator: this,
 			name: this.name+'\'s Portfolio.',
 			description: this.name+'\'s Portfolio.'
-		});
-	}
-	next();
-});
-
-userSchema.post('save', function(doc){
-	if(this.activity) {
-		this.activity.save()
-		.then(function(activity){
-			delete this.activity;
-		});
-	}
-	if(this.portfolio) {
+		})
 		this.portfolio.save()
-		.then(function(portfolio){
-			delete this.portfolio;
-		});
 	}
-});
+	next()
+})
 
-var User = mongoose.model('User', userSchema);
+userSchema.post('save', (doc) => {
+	//if there is an activity or a portfolio, save it(them) then delete the original(s).
+	if(this.activity) this.activity.save().then((activity) => delete this.activity)
+	if(this.portfolio) this.portfolio.save().then((portfolio) => delete this.portfolio)
+})
 
-module.exports = User;
+const User = mongoose.model('User', userSchema)
+
+module.exports = User

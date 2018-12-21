@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
-var User 	 = require('./user');
+const User 	 = require('./user')
 
-var endorsementSchema = new mongoose.Schema({
+const endorsementSchema = new mongoose.Schema({
 	// A system for creating endorsements for artists.
 	subject: {type: mongoose.Schema.Types.ObjectId, ref:'User', required: true}, //Person receiving the endorsement
 	creator: {type: mongoose.Schema.Types.ObjectId, ref:'User', required: true}, //Person giving the endorsement
@@ -19,9 +19,8 @@ var endorsementSchema = new mongoose.Schema({
 		'none'
 	], default:'none'},															 //rating of the endorsement
 	approved: {type:Boolean, default: false}										 //If the endorsement is approved
-});
+})
 
+const Endorsement = mongoose.model('Endorsement', endorsementSchema)
 
-var Endorsement = mongoose.model('Endorsement', endorsementSchema);
-
-module.exports = Endorsement;
+module.exports = Endorsement

@@ -1,23 +1,18 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
-var User = require('./user');
-var Entry = require('./entry');
+const User = require('./user')
+const Entry = require('./entry')
 
-var portfolioSchema = new mongoose.Schema({
+const portfolioSchema = new mongoose.Schema({
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-	entries: [{type: mongoose.Schema.Types.ObjectId, ref: 'Entry',autopopulate:true}],
+	entries: [{type: mongoose.Schema.Types.ObjectId, ref: 'Entry'}],
 	name: {type:String, default:'No Name'},
 	description: String,
 	//If portfolio is a sub-directory.
 	created: {type:Date, default: Date.now()},
 	modified: Date,
 	//Purpose of the portfolios.  Showcase is the default setting.
-	purpose: {type: String, enum:[
-		'working',
-		'showcase',
-		'assessment',
-		'hybrid'
-	],default:'showcase'},
+	purpose: {type: String, enum:['working', 'showcase', 'assessment', 'hybrid'],default:'showcase'},
 	//Type of portfolio.  misc is the default setting.
 	type: {type: String, enum:[
 		'misc',
@@ -44,26 +39,16 @@ var portfolioSchema = new mongoose.Schema({
 		'poetry',
 		'other'
 	],default:'misc'},
-});
-portfolioSchema.plugin(require('mongoose-autopopulate'));
-portfolioSchema.plugin(require('mongoose-materialized'));
+})
+portfolioSchema.plugin(require('mongoose-materialized'))
 
-portfolioSchema.statics.findByCreator = function(creator, cb){
-	return this.find({creator:creator}, cb);
-};
+portfolioSchema.statics.findByCreator = (creator, cb) => this.find({creator:creator}, cb)
 
-portfolioSchema.statics.findByType = function(type, cb){
-	return this.find({type:type}, cb);
-};
+portfolioSchema.statics.findByType = (type, cb) => this.find({type:type}, cb)
 
-portfolioSchema.statics.findByPurpose = function(purpose, cb){
-	return this.find({purpose:purpose}, cb);
-};
+portfolioSchema.statics.findByPurpose = (purpose, cb) => this.find({purpose:purpose}, cb)
 
-portfolioSchema.statics.findByName = function(name, cb){
-	return this.find({name:name}, cb);
-};
+portfolioSchema.statics.findByName = (name, cb) => this.find({name:name}, cb)
 
-
-var Portfolio = mongoose.model('Portfolio', portfolioSchema);
-module.exports = Portfolio;
+const Portfolio = mongoose.model('Portfolio', portfolioSchema)
+module.exports = Portfolio
