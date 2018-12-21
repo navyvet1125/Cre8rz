@@ -40,7 +40,6 @@ const portfolioSchema = new mongoose.Schema({
 		'other'
 	],default:'misc'},
 })
-portfolioSchema.plugin(require('mongoose-materialized'))
 
 portfolioSchema.statics.findByCreator = (creator, cb) => this.find({creator:creator}, cb)
 
